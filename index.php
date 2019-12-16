@@ -44,7 +44,7 @@
 			header('Location: index.php');
 			}
 		} elseif ("register" == $_POST['formName']) {
-			if (empty($_POST['email']) || empty($_POST['phone']) || empty($_POST['password']) || empty($_POST['showname']) || $_FILES['avatar']['error'] == 0) {
+			if (empty($_POST['email']) || empty($_POST['phone']) || empty($_POST['password']) || empty($_POST['showname']) || $_FILES['avatar']['error'] != 0) {
 				echo 'THIẾU THÔNG TIN ĐỂ ĐĂNG KÝ. <a href="javascript:history.go(-1)">Nhấp để thực hiện lại.</a>';
 			} else {
 				$image=addslashes($_FILES['avatar']['tmp_name']);
