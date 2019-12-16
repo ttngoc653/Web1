@@ -38,21 +38,27 @@ if (isset($_GET['id'])) {
 				<?php
 				$tinhtrang=$banbe->get($infoUser['ma'], $_GET['id']);
 				if ($tinhtrang==NULL) {
-					?>
+					?><input type="hidden" name="actWall" value="add" />
 					<button type="submit" name="actWall" value="add" class="btn btn-info">Kết bạn</button>
 					<?php
 				} elseif ($tinhtrang['tinhtrang']==0) {
 					if ($tinhtrang['ban2']==$infoUser['ma']) {
-						echo '<button type="submit" name="actWall" value="accept" class="btn btn-primary">Chấp nhập yêu cầu kết bạn</button>';
+						echo '<input type="hidden" name="actWall" value="accept" /><button type="submit" name="actWall" value="accept" class="btn btn-primary">Chấp nhập yêu cầu kết bạn</button>';
 					} else {
 						echo '<button type="submit" class="btn btn-primary" disabled>Đã gửi yêu cầu kết bạn</button>';
 					}
 					
 					?>
+			</form><form style="text-align: center;" action="" method="post" id="formSubmitted" accept-charset="utf-8">
+				<input type="hidden" name="userId" value="<?php echo $infoUser['ma']; ?>" />
+				<input type="hidden" name="seeingId" value="<?php echo $_GET['id']; ?>" />
+			<input type="hidden" name="actWall" value="exit" />
 					<button type="submit" name="actWall" value="exit"  class="btn btn-danger">Xóa lời mời</button>
 					<?php
 				} elseif ($tinhtrang['tinhtrang']==1) {
 					?>
+					<button class="btn btn-primary" disabled>Bạn bè</button>
+					<input type="hidden" name="actWall" value="exit" />
 					<button type="submit" name="actWall" value="exit"  class="btn btn-danger">Hủy kết bạn</button>
 					<?php
 				}
