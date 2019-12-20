@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 /**
  * lớp liên quan tới trạng thái
  */
@@ -14,18 +14,7 @@ class trangthai extends connectDB {
 	public function getListAccordingTo($idUser)
 	{
 		$stmt= $this->getConnect()->prepare("SELECT trangthai.nguoidang, 
-									nguoidung.hoten, 
-									nguoidung.avatar, 
-									trangthai.thoigiandang, 
-									trangthai.noidung,
-									trangthai.anhdinhkem 
-									FROM trangthai, nguoidung 
-									WHERE nguoidung.ma=trangthai.nguoidang AND 
-									trangthai.nguoidang = ? 
-									ORDER BY trangthai.thoigiandang DESC;");
-		$stmt->execute(array($idUser));
-		
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+									
 	}
 	
 	public function getListRelate($idUser)
