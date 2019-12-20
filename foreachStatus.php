@@ -1,4 +1,4 @@
-
+﻿
 <div class="container">
 	<?php 
 	if (isset($listStatus)) {
@@ -18,11 +18,7 @@
 				</div>
 				<div class="card-body">
 					<p class="card-text"><?php echo $i['noidung']; ?></p>
-				</div>		
-				<?php if (isset($i['anhdinhkem'])): ?>
-					<div class="card-footer text-muted">
-						<img src="data:image;base64,<?php echo $i['anhdinhkem']; ?>" style="max-height: 100%; max-width: 100%;" alt="">
-					</div>
+				
 				<?php endif ?>
 			</div>
 			<?php
