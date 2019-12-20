@@ -1,5 +1,5 @@
-<?php 
-$titleWeb="1760081 - Kích hoạt thành công";
+﻿<?php 
+$titleWeb="1760081_1560165 - Kích hoạt thành công";
 include 'header.php';
 if (empty($nguoidung)) {
 	$nguoidung=new nguoidung;
