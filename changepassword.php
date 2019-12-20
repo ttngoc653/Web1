@@ -1,4 +1,4 @@
-<?php include 'header.php' ?>
+﻿<?php include 'header.php' ?>
 <div>
 	<?php 
 	if ((empty($_SESSION['user']) && empty($_COOKIE['user']))) {
@@ -8,9 +8,7 @@ window.location.href='index.php';</script>";
 	} else {
 		?>
 <div class="container">
-	<form  action="index.php" method="POST" id="changepass">
-      <input type="hidden" name="formName" value="changepass">
-      <div class="form-group">
+	
         <label for="passwordOld">Nhập khẩu cũ</label>
         <input type="password" name="passwordOld" class="form-control" id="passwordOld" aria-describedby="emailHelp" placeholder="Điền mật khẩu cũ vào đây">
       </div>
