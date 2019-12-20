@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 include 'header.php';
 ?>
 <div>
@@ -14,10 +14,7 @@ include 'header.php';
         $nguoidung->changeInfo($infoUser['ma'], $_POST['showname'], $_POST['phone'])) {
         echo '<script type="text/javascript" charset="utf-8">alert("Thông tin đã được cập nhật.");</script>';
       } else {
-        $image=addslashes($_FILES['avatar']['tmp_name']);
-        $name=addslashes($_FILES['avatar']['name']);
-        $image=file_get_contents($image);
-        $image=base64_encode($image);
+        
         if ($nguoidung->changeInfoHasAvatar($infoUser['ma'], $_POST['showname'], $_POST['phone'], $image)) {
          echo '<script type="text/javascript" charset="utf-8">alert("Thông tin đã được cập nhật cả ảnh đại diện.");</script>';		
        } else {
