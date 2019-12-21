@@ -22,7 +22,7 @@
 				</div>		
 				<?php
 				if (count($listImage)>0) {
-					echo "<div class='card-footer text-muted'><center>";
+					echo "<div class='card-body'><center>";
 				foreach ($listImage as $j) {
 					?>
 						<img src="data:image;base64,<?php echo $j['anhdinhkem']; ?>" data-toggle="modal" data-target=".bd-example-modal-lg" height="100px" class="rounded" style="margin: 3px;" alt="">
@@ -30,6 +30,9 @@
 				}
 				echo "</center></div>";
 				} ?>
+				<div class="card-footer text-muted">
+					
+				</div>
 			</div>
 			<?php
 		}

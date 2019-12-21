@@ -7,7 +7,7 @@ class nguoidung extends connectDB
 	// lấy tất cả thông tin người dùng hiện có
 	public function getAll()
 	{
-		$stmt= $this->getConnect()->query("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar` 
+		$stmt= $this->getConnect()->query("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`  
 			FROM `nguoidung`");
 		
 		return $stmt->fetchAll(DBO::FETCH_ASSOC);
@@ -20,7 +20,7 @@ class nguoidung extends connectDB
 	 */
 	public function logIn($user='', $pass='')
 	{
-		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, IF(LENGTH(`code`) = 32, 0 , 1) AS 'actived'
+		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`, IF(LENGTH(`code`) = 32, 0 , 1) AS 'actived'
 			FROM `nguoidung` 
 			WHERE (email = ? OR sdt = ?)
 			AND matkhau = ?;");
@@ -38,7 +38,7 @@ class nguoidung extends connectDB
 	 */
 	public function getFromKey($key='')
 	{
-		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar` 
+		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh` 
 			FROM `nguoidung` 
 			WHERE email like ? OR sdt like ?");
 		$stmt->execute(array($key, $key));
@@ -54,7 +54,7 @@ class nguoidung extends connectDB
 	 */
 	public function getFromId($id)
 	{
-		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar` 
+		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh` 
 			FROM `nguoidung` 
 			WHERE ma = ?");
 		$stmt->execute(array($id));
@@ -116,7 +116,7 @@ class nguoidung extends connectDB
 		return $this->sameMail($input) || $this->samePhone($input);
 	}
 	
-	public function changeInfo($id, $name,$phone)
+	public function changeInfo($id, $name,$phone,$birthyear)
 	{
 		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar` 
 			FROM `nguoidung` 
@@ -125,8 +125,8 @@ class nguoidung extends connectDB
 		// $stmt->debugDumpParams();
 		while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
 			
-			$stmt = $this->getConnect()->prepare("UPDATE `nguoidung` SET `sdt`= ?, `hoten`= ? WHERE `ma` LIKE ?");
-			$stmt->execute(array($phone, $name, $id));
+			$stmt = $this->getConnect()->prepare("UPDATE `nguoidung` SET `sdt`= ?, `hoten`= ?, `birthyear` = ? WHERE `ma` LIKE ?");
+			$stmt->execute(array($phone, $name, $birthyear, $id));
 			// $stmt->debugDumpParams();
 			return $stmt->rowCount()>=0;
 		}
@@ -134,7 +134,7 @@ class nguoidung extends connectDB
 		return false;
 	}
 	
-	public function changeInfoHasAvatar($id, $name, $phone, $avatar)
+	public function changeInfoHasAvatar($id, $name, $phone, $avatar, $birthyear)
 	{
 		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar` 
 			FROM `nguoidung` 
@@ -143,8 +143,8 @@ class nguoidung extends connectDB
 		
 		while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
 			
-			$stmt = $this->getConnect()->prepare("UPDATE `nguoidung` SET `sdt`= ?, `hoten`= ?, `avatar`= ? WHERE `ma` LIKE ?");
-			$stmt->execute(array($phone, $name, $avatar, $id));
+			$stmt = $this->getConnect()->prepare("UPDATE `nguoidung` SET `sdt`= ?, `hoten`= ?, `avatar`= ?, `namsinh` = ? WHERE `ma` LIKE ?");
+			$stmt->execute(array($phone, $name, $avatar, $birthyear, $id));
 			
 			return $stmt->rowCount()>=0;
 		}
@@ -152,17 +152,17 @@ class nguoidung extends connectDB
 		return false;
 	}
 	
-	public function addUser($mail, $phone, $pass, $name, $avatar, $code)
+	public function addUser($mail, $phone, $pass, $name, $birthyear, $avatar, $code)
 	{
-		if (strlen($mail)==0 || strlen($phone)==0 || strlen($pass)==0 ||strlen($name)==0) {
+		if (strlen($mail)==0 || strlen($phone)==0 || strlen($pass)==0 || strlen($name)==0 || strlen($birthyear)==0) {
 			return -3;
 		} elseif ($this->sameMail($mail)) {
 			return -2;
 		} elseif ($this->samePhone($phone)) {
 			return -1;
 		} else {
-			$stmt = $this->getConnect()->prepare("INSERT INTO `nguoidung`(`email`, `sdt`, `hoten`, `matkhau`, `avatar`) VALUES (?,?,?,?,?)");
-			$stmt->execute(array($mail, $phone, $name, hash('whirlpool',$pass), $avatar));
+			$stmt = $this->getConnect()->prepare("INSERT INTO `nguoidung`(`email`, `sdt`, `hoten`, `namsinh`, `matkhau`, `avatar`) VALUES (?,?,?,?,?,?)");
+			$stmt->execute(array($mail, $phone, $name, $birthyear, hash('whirlpool',$pass), $avatar));
 
 			return $this->getConnect()->lastInsertId();
 		}
