@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 
 include 'header.php';
 
@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
 	} elseif ($user!=NULL) {
 		?>
 		<h2 style="text-align: center;">Tường nhà của <?php echo $user['hoten']; ?></h2>
-		<?php if (isset($infoUser)): ?>
+		 <?php if (isset($infoUser)): ?>
 			<form style="text-align: center;" action="" method="post" id="formSubmitted" accept-charset="utf-8">
 				<input type="hidden" name="userId" value="<?php echo $infoUser['ma']; ?>" />
 				<input type="hidden" name="seeingId" value="<?php echo $_GET['id']; ?>" />

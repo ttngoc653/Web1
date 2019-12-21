@@ -1,11 +1,11 @@
-<?php include 'header.php'; ?>
+﻿<?php include 'header.php'; ?>
 <?php if (isset($_POST['formName'])): ?>
 	<div class="alert alert-info text-center" role="alert">
 		<?php
 		$nguoidung = new nguoidung;
 		if ("changepass" == $_POST['formName']) {
 			if ($nguoidung->logIn($infoUser['sdt'],$_POST['passwordOld']) == NULL) {
-				echo 'SAI MẬT KHẨU CŨ. <a href="javascript:history.go(-1)">Nhấp để nhập lại.</a>';
+			   echo	 'SAI MẬT KHẨU CŨ. <a href="javascript:history.go(-1)">Nhấp để nhập lại.</a>';
 			} elseif($_POST['passwordNew'] != $_POST['confirmPasswordNew']){
 				echo 'MẬT KHẨU MỚI KHÔNG GIỐNG NHAU. <a href="javascript:history.go(-1)">Nhấp để nhập lại.</a>';
 			} else {
