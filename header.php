@@ -6,6 +6,7 @@
   <title>1760081_1560165</title>
   <link rel="stylesheet" href="">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" integrity="sha256-46qynGAkLSFpVbEBog43gvNhfrOj+BmwXdxFgVK/Kvc=" crossorigin="anonymous" />
   <style type="text/css" media="screen">
     .avatar-pic {
       width: 150px;
@@ -80,7 +81,6 @@
             <?php 
           } else {
             ?>
-            <a class="nav-item nav-link" href="post.php">Đăng trạng thái</a>
             <a class="nav-item nav-link" href="friend.php">Bạn bè</a>
             <a class="nav-item nav-link" href="profile.php">
               <?php 
@@ -95,6 +95,21 @@
           ?>
         </div>
       </div>
+
+
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+<?php
+if(isset($infoUser)) {
+?>
+      <a class="nav-item nav-link" style="cursor: pointer;">
+        <i class="far fa-bell"></i>
+      </a>
+      <?php
+}
+?>
     </nav>
   </div>
   <div class="container">

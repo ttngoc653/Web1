@@ -1,8 +1,8 @@
-<?php include 'header.php'; ?>
+<?php/* include 'header.php';*/ ?>
 
 
 <div class="container">
-	<h2>Thêm trạng thái mới</h2>
+	<h2>Đăng trạng thái</h2>
 	<form action="index.php" method="post" id="formSubmitted" class="md-form" enctype="multipart/form-data">
 		<input type="hidden" name="formName" value="postStatus"/>
 		<div class="form-group">
@@ -54,4 +54,4 @@ $(document).ready(function(){
 });
 </script>
 
-<?php include 'footer.php'; ?>
+<?php /*include 'footer.php';*/ ?>
