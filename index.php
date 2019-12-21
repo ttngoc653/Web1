@@ -24,51 +24,6 @@
 				}
 			}
 
-		} elseif ("login" == $_POST['formName']) {
-			$login = $nguoidung->logIn($_POST['email'],$_POST['password']);
-			if ($login==NULL) {
-				echo 'SAI THÔNG TIN ĐĂNG NHẬP. <a href="javascript:history.go(-1)">Nhấp để thực hiện lại.</a>';
-			}
-			elseif ($login['actived']=='0') {
-				echo "TÀI KHOẢN CHƯA ĐƯỢC KÍCH HOẠT. VUI LÒNG VÀO EMAIL ĐÃ ĐĂNG KÝ ĐỂ KÍCH HOẠT TÀI KHOẢN.";
-			}
-			else {	
-				$infoUser = $login;
-				if (isset($_POST['remember'])) {
-					setcookie('user', $login, time() + 3600*24*7);
-					echo "Chào mừng ".$login['hoten']." đã trở lại trang.";
-				} else {
-					$_SESSION['user'] = $login;
-					echo "Chào mừng ".$login['hoten']." đã trở lại trang.";
-				}
-				header('Location: index.php');
-			}
-		} elseif ("register" == $_POST['formName']) {
-			if (empty($_POST['email']) || empty($_POST['phone']) || empty($_POST['password']) || empty($_POST['showname']) || $_FILES['avatar']['error'] != 0) {
-				echo 'THIẾU THÔNG TIN ĐỂ ĐĂNG KÝ. <a href="javascript:history.go(-1)">Nhấp để thực hiện lại.</a>';
-			} else {
-				$image=addslashes($_FILES['avatar']['tmp_name']);
-				$name=addslashes($_FILES['avatar']['name']);
-				$image=file_get_contents($image);
-				$image=base64_encode($image);
-
-				$keyCode=bin2hex(random_bytes(16));
-
-				if ($nguoidung->sameMail($_POST['email']) || $nguoidung->samePhone($_POST['phone'])) {
-					echo 'EMAIL HOẶC SỐ ĐIỆN THOẠI ĐÃ CÓ NGƯỜI ĐĂNG KÝ. <a href="javascript:history.go(-1)">Nhấp vào đây để đăng ký với thông tin khác.</a>';
-				} elseif ($nguoidung->addUser($_POST['email'], $_POST['phone'], $_POST['password'], $_POST['showname'], $image, $keyCode) > 0) {
-					$banbe=new banbe;
-					$info=$nguoidung->getFromKey($_POST['email']);
-					$banbe->addFriend($info['ma'], $info['ma']);
-					$banbe->accept($info['ma'], $info['ma']);
-					$nguoidung->setCode($_POST['email'], $keyCode);
-					echo 'ĐÃ ĐĂNG KÝ THÀNH CÔNG. '.relatedemail::sendActiveAccount($_POST['email'], $keyCode).' Vui lòng kiểm tra email để kích hoạt tài khoản.';
-				} else {
-					echo 'ĐĂNG KÝ THẤT BẠI. <a href="register.php">Nhấp vào đây để đăng ký lại.</a>';
-				}
-
-			}
-
 		} elseif (isset($_POST['formName']) && "postStatus" == $_POST['formName']) {
 			$trangthai=new trangthai;
 			$countfiles = count($_FILES['attach']['name']);
@@ -94,7 +49,11 @@
 <?php endif ?>
 <?php 
 if (isset($infoUser)) {
+	include 'post.php';
 	include 'statusInIndex.php';
+}
+else {
+	header('Location: login.php');
 }
 include 'footer.php'; 
 ?>
