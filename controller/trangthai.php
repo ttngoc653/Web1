@@ -1,4 +1,4 @@
-<?php 
+﻿<?php 
 /**
  * lớp liên quan tới trạng thái
  */
@@ -37,7 +37,7 @@ class trangthai extends connectDB {
 									ORDER BY trangthai.thoigiandang DESC;");
 		$stmt->execute(array($idUser));
 		
-		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);							
 	}
 	
 	public function getListRelate($idUser)

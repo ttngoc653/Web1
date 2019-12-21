@@ -1,5 +1,5 @@
-<?php 
-$titleWeb="1760081 - Khôi phục mật khẩu";
+﻿<?php 
+$titleWeb="1760081-1560165 - Khôi phục mật khẩu";
 include 'header.php';
 if (empty($nguoidung)) {
 	$nguoidung=new nguoidung;

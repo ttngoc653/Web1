@@ -1,4 +1,4 @@
-<?php include 'header.php' ?>
+﻿<?php include 'header.php' ?>
 <div>
 	<?php 
 	if ((empty($_SESSION['user']) && empty($_COOKIE['user']))) {
