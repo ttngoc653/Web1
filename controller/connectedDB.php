@@ -7,7 +7,7 @@ class connectDB
 	private $hostName='localhost:3306';
 	private $userName='root';
 	private $passWord='';
-	private $dbName='1760081_btn';
+	private $dbName='1760081_1560165_btn';
 
 	private $db = NULL;
 
