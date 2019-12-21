@@ -8,17 +8,17 @@ include 'header.php';
   } else {
     $nguoidung = new nguoidung;
     if (isset($_POST['act'])) {
-      if (empty($_POST['showname']) || empty($_POST['phone'])) {
+      if (empty($_POST['showname']) || empty($_POST['phone']) || empty($_POST['birthyear'])) {
         echo '<script type="text/javascript" charset="utf-8">alert("Không thay đổi được do thiếu thông tin.");</script>';
       } elseif ($_FILES['image']['avatar'] != 0 &&
-        $nguoidung->changeInfo($infoUser['ma'], $_POST['showname'], $_POST['phone'])) {
+        $nguoidung->changeInfo($infoUser['ma'], $_POST['showname'], $_POST['phone'], $_POST['birthyear'])){
         echo '<script type="text/javascript" charset="utf-8">alert("Thông tin đã được cập nhật.");</script>';
       } else {
         $image=addslashes($_FILES['avatar']['tmp_name']);
         $name=addslashes($_FILES['avatar']['name']);
         $image=file_get_contents($image);
         $image=base64_encode($image);
-        if ($nguoidung->changeInfoHasAvatar($infoUser['ma'], $_POST['showname'], $_POST['phone'], $image)) {
+        if ($nguoidung->changeInfoHasAvatar($infoUser['ma'], $_POST['showname'], $_POST['phone'], $image, $_POST['birthyear'])) {
          echo '<script type="text/javascript" charset="utf-8">alert("Thông tin đã được cập nhật cả ảnh đại diện.");</script>';		
        } else {
          echo '<script type="text/javascript" charset="utf-8">alert("Cập nhật thông tin thất bại.");</script>';
@@ -36,6 +36,12 @@ include 'header.php';
         <label for="name">Họ và tên</label>
         <input type="text" name="showname" class="form-control" id="name" aria-describedby="nameHelp" placeholder="Điền họ và tên vào đây" required value="<?php echo $infoUser['hoten']; ?>" />
       </div>
+        <div class="form-group">
+          <label class="form-check-label" for="selectYear">
+            Chọn năm sinh
+          </label>
+          <select name="birthyear" id="selectYear" class="form-control" placeholder="Nhập năm sinh" required></select>
+        </div>
       <div class="form-group">
         <label for="phone">Số điện thoại</label>
         <input type="phone" name="phone" class="form-control" id="phone" placeholder="Điền số điện thoại vào đây" required value="<?php echo $infoUser['sdt']; ?>" />
