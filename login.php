@@ -2,7 +2,7 @@
   <div>
     <?php 
     if (!(empty($_SESSION['user']) && empty($_COOKIE['user']))) {
-    header('Location: index.php');
+      redỉrectTo("Đã đăng nhập rồi.");
   } else {
   ?>
   <div class="container">
