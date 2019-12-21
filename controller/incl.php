@@ -33,6 +33,10 @@ function linkActiveAccount()
     return implode("/", $splited) . "/active-account.php";
 }
 
+function redỉrectTo($message,$toPage="index.php"){
+    echo "<script>alert('$message'); window.location = '$toPage'; </script>";
+}
+
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/language/phpmailer.lang-vi.php';

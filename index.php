@@ -41,7 +41,7 @@
 					$_SESSION['user'] = $login;
 					echo "Chào mừng ".$login['hoten']." đã trở lại trang.";
 				}
-			header('Location: index.php');
+				header('Location: index.php');
 			}
 		} elseif ("register" == $_POST['formName']) {
 			if (empty($_POST['email']) || empty($_POST['phone']) || empty($_POST['password']) || empty($_POST['showname']) || $_FILES['avatar']['error'] != 0) {
@@ -71,14 +71,19 @@
 
 		} elseif (isset($_POST['formName']) && "postStatus" == $_POST['formName']) {
 			$trangthai=new trangthai;
-			if ($_FILES['attach']['error'] == 0) {
-				$image=addslashes($_FILES['attach']['tmp_name']);
-				$name=addslashes($_FILES['attach']['name']);
+			$countfiles = count($_FILES['attach']['name']);
+			$images=array();
+			for ($i=0; $i < $countfiles; $i++) {
+			if ($_FILES['attach']['error'][$i] == 0) {
+				$image=addslashes($_FILES['attach']['tmp_name'][$i]);
+				$name=addslashes($_FILES['attach']['name'][$i]);
 				$image=file_get_contents($image);
 				$image=base64_encode($image);
+				array_push($images, $image);
+			}
 			}
 
-			if (isset($infoUser) && $trangthai->create($infoUser['ma'], $_POST['contentStatus'], (isset($image) ? $image : NULL)) != NULL) {
+			if (isset($infoUser) && $trangthai->create($infoUser['ma'], $_POST['contentStatus'], $images ) != NULL) {
 				echo 'ĐÃ ĐĂNG TRẠNG THÁI THÀNH CÔNG.';
 			} else {
 				echo 'XẢY RA VẤN ĐỀ KHI ĐĂNG TRẠNG THÁI.';
