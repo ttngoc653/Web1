@@ -1,4 +1,3 @@
-
 <div class="container">
 	<?php 
 	if (isset($listStatus)) {
@@ -20,7 +19,7 @@
 					</table>
 				</div>
 				<div class="card-body">
-					<p class="card-text"><?php echo $i['noidung']; ?></p>
+					<p class="card-text"><?php echo htmlspecialchars($i['noidung'], ENT_QUOTES); ?></p>
 				</div>		
 				<?php
 				if (count($listImage)>0) {
@@ -36,10 +35,10 @@
 				$checkLiked=$thich->check($infoUser['ma'],$i['ma']); 
 				?>
 				<div class="card-footer text-muted">
-					<button type="button" id="itemLike" class="btn btn-<?php if($checkLiked){ echo 'secondary'; } else { echo 'light'; }?>"  data-statuid="<?php echo $i['ma']; ?>"><i class="fas fa-american-sign-language-interpreting" style="font-size: 20px;"></i></button>
-					<button type="button" class="btn btn-light">Bình luận</i></button>
-					<div class="list-group">
-						<div class="list-group-item">
+					<button type="button" id="itemLike" class="btn btn-<?php if($checkLiked){ echo 'secondary'; } else { echo 'light'; }?>"  data-statuid="<?php echo $i['ma']; ?>"><i class="fas fa-american-sign-language-interpreting" style="font-size: 20px;"></i><span class="badge badge-light"><?php echo $thich->countLiked($i['ma']); ?></span></button>
+					<button type="button" id="showCmt" class="btn btn-light">Bình luận</i></button>
+					<div class="itemsCmt" style="display: none; margin-top: 5px;">
+						<div id="formCmt">
 							<form>
 								<input type="hidden" name="postId" value="<?php echo $i['ma']; ?>">
 								<div class="form-group row">
@@ -48,9 +47,9 @@
 								</div>
 							</form>
 						</div>
-					</div>
-					<div id="itemsComment" class="list-group">
-						<!-- <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button> -->
+						<div class="container">
+							
+						</div>
 					</div>
 				</div>
 			</div>
@@ -73,6 +72,7 @@
 </div>
 
 <div id="checkAjax"></div>
+
 <script>
 	$(document).ready(function () {
 		$("img.rounded").click(function () {
@@ -80,33 +80,40 @@
 			$("img.popup-image").attr("src", $src);
 		});
 
-		$("button.btn.btn-light#itemLike").click(function () {
+		$("button#itemLike.btn").click(function () {
 			var $statuId=$(this).data('statuid');
-	    	//alert($statuId);
+			var numberLiked=0;
+			var elementSelected=$(this);
 
-	    	$.ajax({
-	    		url:"<?php echo getCurURL(); ?>/ajaxProcess/actionLike.php",
-	    		method:"POST",
-	    		data:{idStatu:$statuId, idUser:<?php echo $infoUser['ma']; ?>},
-	    		success:function(data) {
-	    		}
-	    	});
+			if ($(this).hasClass("btn-light")) {
+				$(this).removeClass('btn-light').addClass('btn-secondary');
 
-	    	$(this).removeClass('btn-light').addClass('btn-secondary');
-	    });
+				$.ajax({
+					url:"<?php echo getCurURL(); ?>/ajaxProcess/actionLike.php",
+					method:"POST",
+					data:{idStatu:$statuId, idUser:<?php echo $infoUser['ma']; ?>},
+					success:function(data) {
+						//alert("Like: "+data);
+						elementSelected.find('.badge.badge-light').text(data);
+					}
+				})
+			} else {
+				$(this).removeClass('btn-secondary').addClass('btn-light');
 
-		$("button.btn.btn-secondary#itemLike").click(function () {
-			var $statuId=$(this).data('statuid');
-
-			$.ajax({
-				url:"<?php echo getCurURL(); ?>/ajaxProcess/actionUnlike.php",
-				method:"POST",
-				data:{idStatu:$statuId, idUser:<?php echo $infoUser['ma']; ?>},
-				success:function(data) {
+				$.ajax({
+					url:"<?php echo getCurURL(); ?>/ajaxProcess/actionUnlike.php",
+					method:"POST",
+					data:{idStatu:$statuId, idUser:<?php echo $infoUser['ma']; ?>},
+					success:function(data) {
+					//alert("Unlike: "+data);
+					elementSelected.find('.badge.badge-light').text(data);
 				}
-			});
+			})
+			}
+		});
 
-			$(this).removeClass('btn-secondary').addClass('btn-light');
+		$("button#showCmt").click(function () {
+			$(this).parent().find("div.itemsCmt").toggle();
 		});
 	});
 
