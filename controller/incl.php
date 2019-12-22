@@ -47,4 +47,5 @@ include 'nguoidung.php';
 include 'trangthai.php';
 include 'thich.php';
 include 'binhluan.php';
+include 'thongbao.php';
  ?>

@@ -6,7 +6,7 @@ class trangthai extends connectDB {
 	public function create($idUser,$content,$privateP, $images)
 	{
 		$stmt = $this->getConnect()->prepare("INSERT INTO `trangthai`(`nguoidang`, `riengtu`,`noidung`) VALUES (?, ?, ?);");
-		$stmt->execute(array($idUser, $privateP, str_replace("\n","<br />", htmlentities($content))));
+		$stmt->execute(array($idUser, $privateP, str_replace("\n","<br />", str_replace("\n","<br />", htmlentities($content)))));
 
 		$idTrangThai=$this->getConnect()->lastInsertId();
 
@@ -15,8 +15,8 @@ class trangthai extends connectDB {
 				error_reporting(0);
 				$stmt = $this->getConnect()->prepare("INSERT INTO `trangthaidinhkem`(`matt`, `anhdinhkem`) VALUES (?,?);");
 				$stmt->execute(array($idTrangThai, $images[$i]));
-			} catch (Exception $e) {
-				
+			} catch (PDOException $e) {
+				echo $i;
 			}
 		}
 
