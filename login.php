@@ -2,7 +2,7 @@
   <div>
     <?php 
     if (!(empty($_SESSION['user']) && empty($_COOKIE['user']))) {
-      redỉrectTo("Đã đăng nhập rồi.");
+      redirectTo("Đã đăng nhập rồi.");
     } else {
       if (isset($_POST['formName']) && "login" == $_POST['formName']) {
         $nguoidung = new nguoidung;
@@ -12,7 +12,6 @@
         }
         elseif ($login['actived']=='0') {
           echo '<div class="alert alert-info" role="alert">TÀI KHOẢN CHƯA ĐƯỢC KÍCH HOẠT. VUI LÒNG VÀO EMAIL ĐÃ ĐĂNG KÝ ĐỂ KÍCH HOẠT TÀI KHOẢN.</div>';
-          break;
         }
         else {  
           $infoUser = $login;

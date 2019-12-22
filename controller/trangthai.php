@@ -12,7 +12,7 @@ class trangthai extends connectDB {
 
 		for ($i=0; $i < count($images); $i++) { 
 			try{
-			//	error_reporting(0);
+				error_reporting(0);
 				$stmt = $this->getConnect()->prepare("INSERT INTO `trangthaidinhkem`(`matt`, `anhdinhkem`) VALUES (?,?);");
 				$stmt->execute(array($idTrangThai, $images[$i]));
 			} catch (Exception $e) {
