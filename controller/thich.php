@@ -16,7 +16,7 @@ class thich extends connectDB {
 	public function check($idUser,$idStatu,$idComment = NULL)
 	{
 		if ($idComment == NULL) {
-			$stmt = $this->getConnect()->prepare("SELECT * FROM `luotthich` WHERE `mand` = ? AND `matt` =  ?;");
+			$stmt = $this->getConnect()->prepare("SELECT * FROM `luotthich` WHERE `mand` = ? AND `matt` =  ? AND `macmt` IS NULL;");
 			$stmt->execute(array($idUser, $idStatu));
 		} 
 		else {
@@ -32,7 +32,7 @@ class thich extends connectDB {
 	public function countLiked($idStatu,$idComment = NULL)
 	{
 		if ($idComment == NULL) {
-			$stmt = $this->getConnect()->prepare("SELECT * FROM `luotthich` WHERE `matt` =  ?;");
+			$stmt = $this->getConnect()->prepare("SELECT * FROM `luotthich` WHERE `matt` =  ? AND `macmt` IS NULL;;");
 			$stmt->execute(array($idStatu));
 		} 
 		else {
@@ -45,7 +45,7 @@ class thich extends connectDB {
 	public function delete($idUser,$idStatu,$idComment = NULL)
 	{
 		if ($idComment == NULL) {
-			$stmt = $this->getConnect()->prepare("DELETE FROM `luotthich` WHERE `mand` = ? AND `matt` =  ?;");
+			$stmt = $this->getConnect()->prepare("DELETE FROM `luotthich` WHERE `mand` = ? AND `matt` =  ? AND `macmt` IS NULL;");
 			$stmt->execute(array($idUser, $idStatu));
 		} 
 		else {

@@ -26,10 +26,10 @@ if (isset($_GET['id'])) {
 
 	$user=$nguoidung->getFromId($_GET['id']);
 	if ($user!=NULL && $user['ma']==$infoUser['ma']) {
-		header('Location: index.php');
+		header('Location: profile.php');
 	} elseif ($user!=NULL) {
 		?>
-		<h2 style="text-align: center;">Tường nhà của <?php echo $user['hoten']; ?></h2>
+		<h2 style="text-align: center;"><img src="data:image;base64,<?php echo $user['avatar']; ?>" width="150px" class="rounded-circle"> Tường nhà của <?php echo $user['hoten']; ?></h2>
 		 <?php if (isset($infoUser)): ?>
 			<form style="text-align: center;" action="" method="post" id="formSubmitted" accept-charset="utf-8">
 				<input type="hidden" name="userId" value="<?php echo $infoUser['ma']; ?>" />
