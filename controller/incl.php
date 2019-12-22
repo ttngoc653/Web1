@@ -31,7 +31,7 @@ function linkActiveAccount()
     return implode("/", $splited) . "/active-account.php";
 }
 
-function redỉrectTo($message,$toPage="index.php"){
+function redirectTo($message,$toPage="index.php"){
     echo "<script>alert('$message'); window.location = '$toPage'; </script>";
 }
 

@@ -38,7 +38,7 @@
 			}
 			}
 
-			if (isset($infoUser) && $trangthai->create($infoUser['ma'], $_POST['contentStatus'], $images ) != NULL) {
+			if (isset($infoUser) && $trangthai->create($infoUser['ma'], $_POST['contentStatus'], $_POST['privatePort'], $images ) != NULL) {
 				echo 'ĐÃ ĐĂNG TRẠNG THÁI THÀNH CÔNG.';
 			} else {
 				echo 'XẢY RA VẤN ĐỀ KHI ĐĂNG TRẠNG THÁI.';

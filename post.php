@@ -1,12 +1,19 @@
 <?php/* include 'header.php';*/ ?>
 
-
 <div>
 	<h2>Đăng trạng thái</h2>
 	<form action="index.php" method="post" id="formSubmitted" class="md-form" enctype="multipart/form-data">
 		<input type="hidden" name="formName" value="postStatus"/>
 		<div class="form-group">
 			<textarea class="form-control" rows="3" name="contentStatus" placeholder="Bạn đang nghĩ gì?" required></textarea>
+		</div>
+		<div class="form-group">
+			<label for="privatePort">Ai được xem bài viết này?</label>
+			<select name="privatePort" id="privatePort" class="form-control" required>
+				<option value="2">Công khai</option>
+				<option value="1">Bạn bè</option>
+				<option value="0">Chỉ mình tôi</option>
+			</select>
 		</div>
 		<div class="custom-file">
 			<input type="file" name="attach[]" multiple class="custom-file-input" id="gallery-photo-add" accept="image/*" >
