@@ -1,9 +1,8 @@
-<?php 
-//var_dump($_POST);
-//var_dump($_FILES); 
-//var_dump($infoUser);
-?>
+
 </div>
+<footer style="margin: 10px;">
+	
+</footer>
 <script>
 	$(document).ready(function () {
 
@@ -32,13 +31,12 @@
 
 		    });
 		}
-
-		$(".custom-file-input").on("change", function() {
-			var fileName = $(this).val().split("\\").pop();
-			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-		});
 	});
 
+	$("body").on("change", ".custom-file-input", function() { //$(".custom-file-input").on("change", function() {
+		var fileName = $(this).val().split("\\").pop();
+		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+	});
 </script>
 </body>
 </html>
