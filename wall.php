@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
 	} elseif ($user!=NULL) {
 		?>
 		<h2 style="text-align: center;"><img src="data:image;base64,<?php echo $user['avatar']; ?>" width="150px" class="rounded-circle"> Tường nhà của <?php echo $user['hoten']; ?></h2>
-		 <?php if (isset($infoUser)): ?>
+		<?php if (isset($infoUser)): ?>
 			<form style="text-align: center;" action="" method="post" id="formSubmitted" accept-charset="utf-8">
 				<input type="hidden" name="userId" value="<?php echo $infoUser['ma']; ?>" />
 				<input type="hidden" name="seeingId" value="<?php echo $_GET['id']; ?>" />
@@ -45,33 +45,44 @@ if (isset($_GET['id'])) {
 					if ($tinhtrang['ban2']==$infoUser['ma']) {
 						echo '<input type="hidden" name="actWall" value="accept" /><button type="submit" name="actWall" value="accept" class="btn btn-primary">Chấp nhập yêu cầu kết bạn</button>';
 					} else {
-						echo '<button type="submit" class="btn btn-primary" disabled>Đã gửi yêu cầu kết bạn</button>';
+						$showBtnDisable=true;
 					}
 					
-					?>
-			</form><form style="text-align: center;" action="" method="post" id="formSubmitted" accept-charset="utf-8">
-				<input type="hidden" name="userId" value="<?php echo $infoUser['ma']; ?>" />
-				<input type="hidden" name="seeingId" value="<?php echo $_GET['id']; ?>" />
-			<input type="hidden" name="actWall" value="exit" />
-					<button type="submit" name="actWall" value="exit"  class="btn btn-danger">Xóa lời mời</button>
-					<?php
-				} elseif ($tinhtrang['tinhtrang']==1) {
-					?>
-					<button class="btn btn-primary" disabled>Bạn bè</button>
-					<input type="hidden" name="actWall" value="exit" />
-					<button type="submit" name="actWall" value="exit"  class="btn btn-danger">Hủy kết bạn</button>
-					<?php
-				}
-				?>
-			</form>
-		<?php endif ?>
-		<?php
+					?></form><form style="text-align: center;" action="" method="post" id="formSubmitted" accept-charset="utf-8">
+						<?php if (isset($showBtnDisable)): ?>
+							<button type="submit" class="btn btn-primary" disabled>Đã gửi yêu cầu kết bạn</button>
+						<?php endif ?>
+						<button type="submit" name="actWall" value="exit"  class="btn btn-danger">Xóa lời mời</button>
+						<input type="hidden" name="userId" value="<?php echo $infoUser['ma']; ?>" />
+						<input type="hidden" name="seeingId" value="<?php echo $_GET['id']; ?>" />
+						<input type="hidden" name="actWall" value="exit" />
 
-		$listStatus=$trangthai->getListAccordingTo($_GET['id']);
+						<?php
+					} elseif ($tinhtrang['tinhtrang']==1) {
+						?>
+						<button class="btn btn-primary" disabled>Bạn bè</button>
+						<input type="hidden" name="actWall" value="exit" />
+						<button type="submit" name="actWall" value="exit"  class="btn btn-danger">Hủy kết bạn</button>
+						<?php
+					}
+					?>
+				</form>
+			<?php endif ?>
+			<?php
 
-		include 'foreachStatus.php'; 
+			$privateToSee = 3;
+			if (isset($tinhtrang) && $tinhtrang['tinhtrang']==1) {
+				$privateToSee=1;
+			} else {
+				$privateToSee=2;
+			}
+
+
+			$listStatus=$trangthai->getListAccordingTo($_GET['id'], $privateToSee);
+
+			include 'foreachStatus.php'; 
+		}
 	}
-}
 
-include 'footer.php';
-?>
+	include 'footer.php';
+	?>

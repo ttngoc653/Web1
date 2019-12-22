@@ -14,6 +14,13 @@
 							<td>
 								<b><a href="wall.php?id=<?php echo $i['nguoidang']; ?>"><h3><?php echo $i['hoten']; ?></h3></a></b>
 								Đăng lúc: <?php echo $i['thoigiandang']; ?>
+								<?php if ($infoUser['ma']==$i['nguoidang']) { ?>
+									<select name="privatePort" id="privatePort" data-statuid="<?php echo $i['ma']; ?>" class="form-control" required>
+										<option value="2" <?php if ($i['riengtu']==2): ?>selected<?php endif ?>>Công khai</option>
+										<option value="1" <?php if ($i['riengtu']==1): ?>selected<?php endif ?>>Bạn bè</option>
+										<option value="0" <?php if ($i['riengtu']==0): ?>selected<?php endif ?>>Chỉ mình tôi</option>
+									</select>
+								<?php } ?>
 							</td>
 						</tr>
 					</table>
@@ -40,15 +47,10 @@
 					<div class="itemsCmt" style="display: none; margin-top: 5px;">
 						<div id="itemsCmt">
 							<?php 
-							$binhluan = new binhluan;
-							$nguoidung=new nguoidung;
-							$getListComment = $binhluan->getList($i['ma']);
-							foreach ($getListComment as $cmt) {
-								$userComment=$nguoidung->getFromId($cmt['ngbinhluanid']);
-								?>
-								<div class="alert" role="alert" style="border-color: #c6c8ca; color: black;">
-									<img src="data:image;base64,<?php echo $userComment['avatar']; ?>" width="50px" class="rounded-circle">	<b><a href="wall.php?id=<?php echo $cmt['ngbinhluanid']; ?>"><?php echo $userComment['hoten']; ?></a></b> lúc <?php echo $cmt['thoigianthuchien']; ?><br/><?php echo $cmt['noidung']; ?></div>
-							<?php } ?>
+							$statuKey = $i['ma'];
+
+							include 'foreachComments.php';
+							?>
 						</div>
 						<div id="formCmt">
 							<form method="POST" id="formComment">
@@ -122,7 +124,6 @@
 		});
 
 		$("form#formComment").submit(function(event) {
-			//alert("sdfgh");
 			var formData = {
 				"content"	:$(this).find('textarea[name=content]').val(),
 				"portid"	:$(this).find('input[name=postId').val(),
@@ -143,6 +144,26 @@
 
 			$(this).find('textarea[name=content]').val('');
 			event.preventDefault();
+		});
+
+		$("select#privatePort").change(function() {
+			var formData = {
+				"valueprivate"	:$(this).children("option:selected").val(),
+				"statuid"	:$(this).data('statuid'),
+				"userid"	:<?php echo $infoUser['ma']; ?>
+
+			};
+
+			$.ajax({
+				type:'POST',
+				url: '<?php echo getCurURL(); ?>/../ajaxProcess/actionChangePrivate.php',
+				data:formData,
+				success:function(data) {
+					if (data!=1) {
+						alert(data);
+					}
+				}
+			})
 		});
 	});
 
