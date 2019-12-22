@@ -23,7 +23,7 @@ class trangthai extends connectDB {
 		return $idTrangThai;
 	}
 	
-	public function getListAccordingTo($idUser, $private = 0)
+	public function getListAccordingTo($idUser, $private = 2)
 	{
 		$stmt= $this->getConnect()->prepare("SELECT trangthai.ma,
 									trangthai.nguoidang, 
@@ -36,7 +36,30 @@ class trangthai extends connectDB {
 									WHERE nguoidung.ma=trangthai.nguoidang AND 
 									trangthai.nguoidang = ? AND
 									trangthai.riengtu >= ?
-									ORDER BY trangthai.thoigiandang DESC;");
+									ORDER BY trangthai.thoigiandang DESC
+									LIMIT 10;");
+		$stmt->execute(array($idUser, $private));
+		
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);							
+	}
+	
+	public function getListHasArrayAccordingTo($idUser, $private = 0, $listShowed = array())
+	{
+		$strIds = " AND trangthai.ma != ".implode(" AND trangthai.ma != ",$listShowed);
+		$stmt= $this->getConnect()->prepare("SELECT trangthai.ma,
+									trangthai.nguoidang, 
+									trangthai.riengtu,
+									nguoidung.hoten, 
+									nguoidung.avatar, 
+									trangthai.thoigiandang, 
+									trangthai.noidung
+									FROM trangthai, nguoidung 
+									WHERE nguoidung.ma=trangthai.nguoidang AND 
+									trangthai.nguoidang = ? AND
+									trangthai.riengtu >= ? 
+									".$strIds." 
+									ORDER BY trangthai.thoigiandang DESC
+									LIMIT 10;");
 		$stmt->execute(array($idUser, $private));
 		
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);							
@@ -59,7 +82,35 @@ class trangthai extends connectDB {
 															WHERE (banbe.ban1=? OR 
 																	banbe.ban2=?) 
 																AND banbe.tinhtrang=1) 
-									ORDER BY trangthai.thoigiandang DESC;");
+									ORDER BY trangthai.thoigiandang DESC
+									LIMIT 10;");
+		$stmt->execute(array($idUser, $idUser, $idUser, $idUser, $idUser));
+		
+		//$stmt->debugDumpParams();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+	
+	public function getListRelateHasArray($idUser,$arrayIdsLoaded)
+	{
+		$strIds = " AND trangthai.ma != ".implode(" AND trangthai.ma != ",$arrayIdsLoaded);
+		$stmt= $this->getConnect()->prepare("SELECT DISTINCT trangthai.ma,
+									trangthai.nguoidang,
+									trangthai.riengtu, 
+									nguoidung.hoten, 
+									nguoidung.avatar, 
+									trangthai.thoigiandang, 
+									trangthai.noidung
+									FROM trangthai, nguoidung 
+									WHERE nguoidung.ma=trangthai.nguoidang AND 
+									((trangthai.riengtu != 0 AND trangthai.nguoidang != ?) || trangthai.nguoidang = ?) AND 
+									trangthai.nguoidang IN (SELECT DISTINCT IF(banbe.ban1 = ?, banbe.ban2, banbe.ban1) 
+															FROM banbe 
+															WHERE (banbe.ban1=? OR 
+																	banbe.ban2=?) 
+																AND banbe.tinhtrang=1)  
+																".$strIds." 
+									ORDER BY trangthai.thoigiandang DESC
+									LIMIT 10;");
 		$stmt->execute(array($idUser, $idUser, $idUser, $idUser, $idUser));
 		
 		//$stmt->debugDumpParams();

@@ -76,13 +76,39 @@ if (isset($_GET['id'])) {
 			} else {
 				$privateToSee=2;
 			}
-
-
+			/*echo "<script>alert(".$privateToSee.");</script>";*/
 			$listStatus=$trangthai->getListAccordingTo($_GET['id'], $privateToSee);
+			$infoUserCode=-1;
+
+			if (isset($infoUser)) {
+				$infoUserCode=$infoUser['ma'];
+			}
 
 			include 'foreachStatus.php'; 
+			include 'funcOfStatus.php';
 		}
 	}
 
 	include 'footer.php';
 	?>
+
+<script>
+	$("body").on("click", "button#btnToShowMorePosts", function(){
+		var arrayStatus= [];
+		$("button#itemLike.btn").each(function(index) {
+			arrayStatus.push($(this).data('statuid'));
+		});	
+		/*alert(arrayStatus);*/
+
+		var elementAdd=$("div#showMoreStatus");
+		$.ajax({
+			url:"<?php echo getCurURL(); ?>/../ajaxProcess/actionGetStatusWall.php",
+			method:"POST",
+			data:{userid:<?php echo isset($_GET['id']) ? $_GET['id'] : "-1"; ?>, arrayLoaded:arrayStatus, private:<?php echo isset($privateToSee)?$privateToSee:'2'; ?>},
+			success:function(data) {//alert(data);
+				elementAdd.before(data);
+				elementAdd.remove();
+			}
+		})
+	});
+</script>
