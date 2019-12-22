@@ -1,7 +1,7 @@
 <?php/* include 'header.php';*/ ?>
 
 
-<div class="container">
+<div>
 	<h2>Đăng trạng thái</h2>
 	<form action="index.php" method="post" id="formSubmitted" class="md-form" enctype="multipart/form-data">
 		<input type="hidden" name="formName" value="postStatus"/>

@@ -1,4 +1,4 @@
-<div class="container">
+<div>
 	<?php 
 	if (isset($listStatus)) {
 		$thich= new thich;
@@ -12,7 +12,7 @@
 						<tr>
 							<td><img style="float: left;" height="55" src="data:image;base64,<?php echo $i['avatar']; ?>" alt=""/></td>
 							<td>
-								<h3><?php echo $i['hoten']; ?></h3>
+								<b><a href="wall.php?id=<?php echo $i['nguoidang']; ?>"><h3><?php echo $i['hoten']; ?></h3></a></b>
 								Đăng lúc: <?php echo $i['thoigiandang']; ?>
 							</td>
 						</tr>
@@ -38,17 +38,26 @@
 					<button type="button" id="itemLike" class="btn btn-<?php if($checkLiked){ echo 'secondary'; } else { echo 'light'; }?>"  data-statuid="<?php echo $i['ma']; ?>"><i class="fas fa-american-sign-language-interpreting" style="font-size: 20px;"></i><span class="badge badge-light"><?php echo $thich->countLiked($i['ma']); ?></span></button>
 					<button type="button" id="showCmt" class="btn btn-light">Bình luận</i></button>
 					<div class="itemsCmt" style="display: none; margin-top: 5px;">
+						<div id="itemsCmt">
+							<?php 
+							$binhluan = new binhluan;
+							$nguoidung=new nguoidung;
+							$getListComment = $binhluan->getList($i['ma']);
+							foreach ($getListComment as $cmt) {
+								$userComment=$nguoidung->getFromId($cmt['ngbinhluanid']);
+								?>
+								<div class="alert" role="alert" style="border-color: #c6c8ca; color: black;">
+									<img src="data:image;base64,<?php echo $userComment['avatar']; ?>" width="50px" class="rounded-circle">	<b><a href="wall.php?id=<?php echo $cmt['ngbinhluanid']; ?>"><?php echo $userComment['hoten']; ?></a></b> lúc <?php echo $cmt['thoigianthuchien']; ?><br/><?php echo $cmt['noidung']; ?></div>
+							<?php } ?>
+						</div>
 						<div id="formCmt">
-							<form>
+							<form method="POST" id="formComment">
 								<input type="hidden" name="postId" value="<?php echo $i['ma']; ?>">
 								<div class="form-group row">
-									<div class="col-11"><textarea class="form-control" name="" placeholder="Viết bình luận..." rows="1" required></textarea></div>
+									<div class="col-11"><textarea class="form-control" name="content" placeholder="Viết bình luận..." rows="1" required></textarea></div>
 									<div class="col-1"><input type="submit" class="btn btn-light float-right" value="Bình luận"></div>
 								</div>
 							</form>
-						</div>
-						<div class="container">
-							
 						</div>
 					</div>
 				</div>
@@ -71,8 +80,6 @@
 	</div>
 </div>
 
-<div id="checkAjax"></div>
-
 <script>
 	$(document).ready(function () {
 		$("img.rounded").click(function () {
@@ -89,11 +96,10 @@
 				$(this).removeClass('btn-light').addClass('btn-secondary');
 
 				$.ajax({
-					url:"<?php echo getCurURL(); ?>/ajaxProcess/actionLike.php",
+					url:"<?php echo getCurURL(); ?>/../ajaxProcess/actionLike.php",
 					method:"POST",
 					data:{idStatu:$statuId, idUser:<?php echo $infoUser['ma']; ?>},
 					success:function(data) {
-						//alert("Like: "+data);
 						elementSelected.find('.badge.badge-light').text(data);
 					}
 				})
@@ -101,19 +107,42 @@
 				$(this).removeClass('btn-secondary').addClass('btn-light');
 
 				$.ajax({
-					url:"<?php echo getCurURL(); ?>/ajaxProcess/actionUnlike.php",
+					url:"<?php echo getCurURL(); ?>/../ajaxProcess/actionUnlike.php",
 					method:"POST",
 					data:{idStatu:$statuId, idUser:<?php echo $infoUser['ma']; ?>},
 					success:function(data) {
-					//alert("Unlike: "+data);
-					elementSelected.find('.badge.badge-light').text(data);
-				}
-			})
+						elementSelected.find('.badge.badge-light').text(data);
+					}
+				})
 			}
 		});
 
 		$("button#showCmt").click(function () {
 			$(this).parent().find("div.itemsCmt").toggle();
+		});
+
+		$("form#formComment").submit(function(event) {
+			//alert("sdfgh");
+			var formData = {
+				"content"	:$(this).find('textarea[name=content]').val(),
+				"portid"	:$(this).find('input[name=postId').val(),
+				"userid"	:<?php echo $infoUser['ma']; ?>
+
+			};
+
+			var itemsComment=$(this).parent().parent().find('div#itemsCmt');
+
+			$.ajax({
+				type:'POST',
+				url: '<?php echo getCurURL(); ?>/../ajaxProcess/actionComment.php',
+				data: formData,
+				success:function(data) {
+					itemsComment.html(data);
+				}
+			})
+
+			$(this).find('textarea[name=content]').val('');
+			event.preventDefault();
 		});
 	});
 

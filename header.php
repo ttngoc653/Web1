@@ -21,7 +21,7 @@
   ?>
   <body>
   <div style="padding-bottom: 10px;">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <header class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">1760081 - 1560165</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -66,6 +66,6 @@
           <?php
         }
         ?>
-      </nav>
+      </header>
     </div>
-    <div class="container">
+    <div style="padding-left: 0.5%; padding-right: 0.5%;">
