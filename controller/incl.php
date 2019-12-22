@@ -1,6 +1,4 @@
 <?php 
-ini_set('mysql.connect_timeout', 300);
-ini_set('default_socket_timeout', 300); 
 function getCurURL()
 {
     if (isset($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
@@ -47,4 +45,5 @@ include 'connectedDB.php';
 include 'banbe.php';
 include 'nguoidung.php';
 include 'trangthai.php';
+include 'thich.php';
  ?>
