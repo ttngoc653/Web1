@@ -9,8 +9,10 @@ if (isset($_POST['idUser']) && isset($_POST['idStatu'])) {
 	} else {
 		$commentId = null;
 	}
-	$thich->create($_POST['idUser'],$_POST['idStatu'], $commentId);
+	if (!$thich->check($_POST['idUser'],$_POST['idStatu'], $commentId)) {
+		$thich->create($_POST['idUser'],$_POST['idStatu'], $commentId);
+	}
 
-	echo true;
+	echo $thich->countLiked($_POST['idStatu'], $commentId);;
 }
- ?>
+?>

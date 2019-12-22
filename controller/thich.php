@@ -29,6 +29,19 @@ class thich extends connectDB {
 		return FALSE;
 	}	
 
+	public function countLiked($idStatu,$idComment = NULL)
+	{
+		if ($idComment == NULL) {
+			$stmt = $this->getConnect()->prepare("SELECT * FROM `luotthich` WHERE `matt` =  ?;");
+			$stmt->execute(array($idStatu));
+		} 
+		else {
+			$stmt = $this->getConnect()->prepare("SELECT * FROM `luotthich` WHERE `matt` =  ? AND `macmt` = ?;");
+			$stmt->execute(array($idStatu,$idComment));	
+		}
+		return $stmt->rowCount();
+	}	
+
 	public function delete($idUser,$idStatu,$idComment = NULL)
 	{
 		if ($idComment == NULL) {
