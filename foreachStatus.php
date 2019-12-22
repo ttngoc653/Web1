@@ -25,12 +25,12 @@
 				<?php
 				if (count($listImage)>0) {
 					echo "<div class='card-body'><center>";
-				foreach ($listImage as $j) {
-					?>
+					foreach ($listImage as $j) {
+						?>
 						<img src="data:image;base64,<?php echo $j['anhdinhkem']; ?>" data-toggle="modal" data-target=".bd-example-modal-lg" height="100px" class="rounded" style="margin: 3px;" alt="">
-					<?php
-				}
-				echo "</center></div>";
+						<?php
+					}
+					echo "</center></div>";
 				}
 
 				$checkLiked=$thich->check($infoUser['ma'],$i['ma']); 
@@ -39,7 +39,18 @@
 					<button type="button" id="itemLike" class="btn btn-<?php if($checkLiked){ echo 'secondary'; } else { echo 'light'; }?>"  data-statuid="<?php echo $i['ma']; ?>"><i class="fas fa-american-sign-language-interpreting" style="font-size: 20px;"></i></button>
 					<button type="button" class="btn btn-light">Bình luận</i></button>
 					<div class="list-group">
-					  <!-- <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button> -->
+						<div class="list-group-item">
+							<form>
+								<input type="hidden" name="postId" value="<?php echo $i['ma']; ?>">
+								<div class="form-group row">
+									<div class="col-11"><textarea class="form-control" name="" placeholder="Viết bình luận..." rows="1" required></textarea></div>
+									<div class="col-1"><input type="submit" class="btn btn-light float-right" value="Bình luận"></div>
+								</div>
+							</form>
+						</div>
+					</div>
+					<div id="itemsComment" class="list-group">
+						<!-- <button type="button" class="list-group-item list-group-item-action">Porta ac consectetur ac</button> -->
 					</div>
 				</div>
 			</div>
@@ -50,27 +61,27 @@
 		}
 	}
 	?>
-<div class="row">
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="background-color: rgba(22,22,22,0.5);">
-  <div class="modal-dialog modal-lg" style="max-width: 100vw;">
-  	<center>
-      <img class="popup-image" src="" style=" max-width:100vw;" alt="" />
-      </center>
-  </div>
-</div>
-</div>
+	<div class="row">
+		<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="background-color: rgba(22,22,22,0.5);">
+			<div class="modal-dialog modal-lg" style="max-width: 100vw;">
+				<center>
+					<img class="popup-image" src="" style=" max-width:100vw;" alt="" />
+				</center>
+			</div>
+		</div>
+	</div>
 </div>
 
 <div id="checkAjax"></div>
 <script>
 	$(document).ready(function () {
 		$("img.rounded").click(function () {
-	        var $src = $(this).attr("src");
-	        $("img.popup-image").attr("src", $src);
-	    });
-	    
-	    $("button.btn.btn-light#itemLike").click(function () {
-	    	var $statuId=$(this).data('statuid');
+			var $src = $(this).attr("src");
+			$("img.popup-image").attr("src", $src);
+		});
+
+		$("button.btn.btn-light#itemLike").click(function () {
+			var $statuId=$(this).data('statuid');
 	    	//alert($statuId);
 
 	    	$.ajax({
@@ -81,23 +92,22 @@
 	    		}
 	    	});
 
-			$(this).removeClass('btn-light').addClass('btn-secondary');
+	    	$(this).removeClass('btn-light').addClass('btn-secondary');
 	    });
 
-	    $("button.btn.btn-secondary#itemLike").click(function () {
-	    	var $statuId=$(this).data('statuid');
-	    	//alert($statuId);
+		$("button.btn.btn-secondary#itemLike").click(function () {
+			var $statuId=$(this).data('statuid');
 
-	    	$.ajax({
-	    		url:"<?php echo getCurURL(); ?>/ajaxProcess/actionUnlike.php",
-	    		method:"POST",
-	    		data:{idStatu:$statuId, idUser:<?php echo $infoUser['ma']; ?>},
-	    		success:function(data) {
-	    		}
-	    	});
+			$.ajax({
+				url:"<?php echo getCurURL(); ?>/ajaxProcess/actionUnlike.php",
+				method:"POST",
+				data:{idStatu:$statuId, idUser:<?php echo $infoUser['ma']; ?>},
+				success:function(data) {
+				}
+			});
 
 			$(this).removeClass('btn-secondary').addClass('btn-light');
-	    });
+		});
 	});
 
 </script>
