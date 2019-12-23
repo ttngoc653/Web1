@@ -11,6 +11,6 @@ if (isset($_POST['userid']) && isset($_POST['arrayLoaded'])) {
 	include '../foreachStatus.php';
 }
 else {
-	var_dump($_POST);
+	//var_dump($_POST);
 }
  ?>

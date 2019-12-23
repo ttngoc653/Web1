@@ -15,7 +15,15 @@ class thongbao extends connectDB {
 	{
 		$stmt = $this->getConnect()->prepare("SELECT * FROM `thongbao` WHERE `ndnhanid` = ? AND `daxem` = 0;");
 		$stmt->execute(array($idUser));	
-		return $stmt->fetchColumn(); // if it is 0, result will not display
+		return $stmt->rowCount(); // if it is 0, result will not display
+	}
+
+	public function getList($idUser,$listShowed = array())
+	{
+		$strIds = " AND thongbao.ma != ".implode(" AND thongbao.ma != ",$listShowed);
+		$stmt = $this->getConnect()->prepare("SELECT `ma`, `noidung`, `thoigianthuchien`, `link`, `daxem` FROM `thongbao` WHERE `ndnhanid` = ? ".$strIds." ORDER BY thongbao.ma DESC LIMIT 10;");
+		$stmt->execute(array($idUser));	
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
 	public function convertSeen($idlog)
