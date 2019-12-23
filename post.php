@@ -16,7 +16,7 @@
 			</select>
 		</div>
 		<div class="custom-file">
-			<input type="file" name="attach[]" multiple class="custom-file-input" id="gallery-photo-add" accept="image/*" >
+			<input type="file" name="attach[]" style="z-index: 10;" multiple class="custom-file-input" id="gallery-photo-add" accept="image/*" >
 			<label class="custom-file-label" for="attach">Chọn hình ảnh đính kèm</label>
 		</div>
 		<div class="form-group">
