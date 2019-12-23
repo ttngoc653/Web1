@@ -30,7 +30,7 @@ include 'header.php';
    ?>
    <div class="container">
     <h2>Quản lý thông tin cá nhân</h2>
-    <form  action="#" method="POST" id="formSubmitted" enctype="multipart/form-data">
+    <form  action="profile.php" method="POST" id="formSubmitted" enctype="multipart/form-data">
       <input type="hidden" name="act" value="update"/>
       <div class="form-group">
         <label for="name">Họ và tên</label>
