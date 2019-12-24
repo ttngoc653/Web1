@@ -26,7 +26,7 @@ if (isset($_GET['id'])) {
 
 	$user=$nguoidung->getFromId($_GET['id']);
 	if ($user!=NULL && $user['ma']==$infoUser['ma']) {
-		header('Location: profile.php');
+		echo ' <script> location.replace("profile.php"); </script>';
 	} elseif ($user!=NULL) {
 		?>
 		<h2 style="text-align: center;"><img src="data:image;base64,<?php echo $user['avatar']; ?>" width="150px" class="rounded-circle"> Tường nhà của <?php echo $user['hoten']; ?></h2>

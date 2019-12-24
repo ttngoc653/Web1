@@ -16,11 +16,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </head>
+<body>
 <?php 
 session_start(); 
-include 'controller/incl.php';
+include "controller/incl.php";
 ?>
-<body>
   <div style="padding-bottom: 10px;">
     <header class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">1760081 - 1560165</a>
@@ -53,25 +53,44 @@ include 'controller/incl.php';
         </div>
       </div>
 
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <form class="form-inline my-2 my-lg-0" method="GET" action="search.php">
+        <input list="listSearching" name="q" id="keywordSearch" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+  <datalist id="listSearching">
+  </datalist>
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
+      <script>
+          $("body").on("keyup","input#keywordSearch",function() {
+            var keywordInputted = $(this).val();
+
+            var elementAdd=$("datalist#listSearching");
+
+            $.ajax({
+              url:"<?php echo getCurUrl(); ?>/../ajaxProcess/actionSearch.php",
+              method:'POST',
+              data:{keyword:keywordInputted},
+              success:function(data) {
+                elementAdd.html(data);
+                //alert(data);
+              }
+            })
+          });
+      </script>
       <?php
       if(isset($infoUser)) {
         ?>
-        <div class="w3-dropdown-click">
-          <a class="nav-item nav-link" onclick="showListNotification()" style="cursor: pointer;">
+        <div class="dropdown">
+          <a class="nav-item nav-lin dropdown-toggle" data-toggle="dropdown" onclick="showListNotification()" style="cursor: pointer;">
             <i class="far fa-bell"><span class="badge badge-success" id="countNotifiNoSee">Info</span></i>
           </a>
-          <div class="w3-dropdown-content w3-bar-block w3-card-4 w3-animate-zoom" id="listNotifi" style="right:0">
+          <div class="dropdown-menu dropdown-menu-right" id="listNotifi" style="z-index: 10; max-height: 320px; overflow: auto; margin-top: 10px;">
             fghjkkhgf
           </div>
         </div>
         <script>
           $("body").on("click","#toShowOtherNotification",function(){
             var arrayNotifi = ["-1"];
-            $("button#statusItem").each(function(index) {
+            $("div#statusItem").each(function(index) {
               arrayNotifi.push($(this).data('idnotification'));
             });
             elementAdd=$(this);
@@ -80,7 +99,8 @@ include 'controller/incl.php';
               method:'POST',
               data:{userid:<?php echo $infoUser['ma'] ?>, listshowed:arrayNotifi},
               success:function(data) {
-                
+                elementAdd.before(data);
+                elementAdd.remove();
               }
             })
           });

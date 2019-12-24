@@ -44,7 +44,7 @@ class trangthai extends connectDB {
 			trangthai.nguoidang, 
 			trangthai.riengtu,
 			nguoidung.hoten, 
-			hoten.avatar, 
+			nguoidung.avatar, 
 			trangthai.thoigiandang, 
 			trangthai.noidung
 			FROM trangthai, nguoidung 

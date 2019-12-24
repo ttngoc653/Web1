@@ -5,14 +5,14 @@ function getCurURL()
         $pageURL = "https://";
     } else {
       $pageURL = 'http://';
-    }
-    if (isset($_SERVER["SERVER_PORT"]) && $_SERVER["SERVER_PORT"] != "80") {
-        $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
-    } else {
-        $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
-    }
-    $split = explode("?", $pageURL);
-    return $split[0];
+  }
+  if (isset($_SERVER["SERVER_PORT"]) && $_SERVER["SERVER_PORT"] != "80") {
+    $pageURL .= $_SERVER["SERVER_NAME"] . ":" . $_SERVER["SERVER_PORT"] . $_SERVER["REQUEST_URI"];
+} else {
+    $pageURL .= $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+}
+$split = explode("?", $pageURL);
+return $split[0];
 }
 
 function linkResetPass()
@@ -32,7 +32,10 @@ function linkActiveAccount()
 }
 
 function redirectTo($message,$toPage="index.php"){
-    echo "<script>alert('$message'); window.location = '$toPage'; </script>";
+    if (strlen($message)>0) {
+        echo "<script>alert('$message');</script>";    
+    }
+    echo "<script>window.location = '$toPage'; </script>";
 }
 
 require 'PHPMailer/src/Exception.php';
@@ -48,4 +51,4 @@ include 'trangthai.php';
 include 'thich.php';
 include 'binhluan.php';
 include 'thongbao.php';
- ?>
+?>

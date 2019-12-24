@@ -1,33 +1,71 @@
 <?php include 'header.php'; ?>
 <div class="container">
-<?php if (isset($infoUser)): ?>
-	<h2>Danh sách bạn bè</h2>
-	<?php 
-	
-	$banbe=new banbe;
-	$nguoidung=new nguoidung;
-	$listCurrent = $banbe->getListIdFriendCurrent($infoUser['ma']);
-	?>
-	<div class="list-group list-group-flush">
-		<?php
-		foreach ($listCurrent as $i) {
-			$ban=$nguoidung->getFromId($i['ban']);
-			?>
-			<a href="wall.php?id=<?php echo $i['ban']; ?>" class="list-group-item"><?php echo $ban['hoten']; ?></a>
-		<?php } ?>
+	<?php if (isset($infoUser)): ?>
+		<h2>Danh sách bạn bè</h2>
+		<?php 
+
+		$banbe=new banbe;
+		$nguoidung=new nguoidung;
+		$listCurrent = $banbe->getListIdFriendCurrent($infoUser['ma']);
+		?>
+		<div class="list-group list-group-flush row">
+			<?php
+			foreach ($listCurrent as $i) {
+				$ban=$nguoidung->getFromId($i['ban']);
+				if (isset($ban['avatar'])) {
+					$imgSrc= "data:image;base64,".$ban['avatar'];
+				}else {
+					$imgSrc= './image/'.$ban['avatar_img'];
+				}
+				?>
+				<div class="list-group-item col-6">
+					<a href="wall.php?id=<?php echo $i['ban']; ?>"style="font-size: 18px;"><img src="<?php echo $imgSrc; ?>" height="36px" class="rounded-circle" style="margin-right: 15px;"><?php echo $ban['hoten']; ?></a> 
+					<button class="btn btn-danger" id="actWall" value="delete" data-partnerid="<?php echo $i['ban']; ?>" style="float: right;">Xóa bạn</button>
+				</div>
+			<?php } ?>
+		</div>
+
+		<br />
+		<h2>Đang chờ trả lời</h2>
+		<div class="list-group list-group-flush row">
+			<?php
+			$listWaiting = $banbe->getListIdFriendWaiting($infoUser['ma']);
+			foreach ($listWaiting as $i) {
+				$ban=$nguoidung->getFromId($i['ban']);
+				if (isset($ban['avatar'])) {
+					$imgSrc= "data:image;base64,".$ban['avatar'];
+				}else {
+					$imgSrc= './image/'.$ban['avatar_img'];
+				}
+				?>
+				<div class="list-group-item col-6">
+					<a href="wall.php?id=<?php echo $i['ban']; ?>"style="font-size: 18px;"><img src="<?php echo $imgSrc; ?>" height="36px" class="rounded-circle" style="margin-right: 15px;"><?php echo $ban['hoten']; ?></a>
+					<button class="btn btn-danger" id="actWall" value="destroy" data-partnerid="<?php echo $i['ban']; ?>" style="float: right;">Xóa lời mời</button>
+					<button class="btn btn-primary" id="actWall" value="accept" data-partnerid="<?php echo $i['ban']; ?>" style="float: right; margin-right: 5px;">Chấp nhận</button>
+				</div>
+			<?php } ?>
+		</div>
+		<script>
+				$("body").on("click","button#actWall",function() {
+					var act=$(this).val();
+					//alert(act);
+					var idPartner=$(this).data('partnerid');
+					//alert(idPartner);
+					var elementChanged=$(this).parent();
+					elementChanged.remove();
+
+					$.ajax({
+						url:"<?php echo getCurUrl(); ?>/../ajaxProcess/actionFriend.php",
+						method:"POST",
+						data:{userid:<?php echo isset($infoUser)?$infoUser['ma']: "0"; ?>,partnerid:idPartner,act:act},
+						success:function(data) {
+							//alert(data);
+						}
+					})
+				});
+		</script>
+		<?php else: ?>
+			<?php redirectTo("Đăng nhập để sử dụng tính năng này."); ?>
+		<?php endif ?>
 	</div>
-	
-	<br />
-	<h2>Đang chờ trả lời</h2>
-	<div class="list-group list-group-flush">
-		<?php
-		$listWaiting = $banbe->getListIdFriendWaiting($infoUser['ma']);
-		foreach ($listWaiting as $i) {
-			$ban=$nguoidung->getFromId($i['ban']);
-			?>
-			<a href="wall.php?id=<?php echo $i['ban']; ?>" class="list-group-item"><?php echo $ban['hoten']; ?></a>
-		<?php } ?>
-	</div>
-<?php endif ?>
-</div>
-<?php include 'footer.php'; ?>
+	<?php include 'footer.php'; ?>
