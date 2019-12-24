@@ -7,10 +7,10 @@ class nguoidung extends connectDB
 	// lấy tất cả thông tin người dùng hiện có
 	public function getAll()
 	{
-		$stmt= $this->getConnect()->query("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`  
+		$stmt= $this->getConnect()->query("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`, `avatar_img`  
 			FROM `nguoidung`");
 		
-		return $stmt->fetchAll(DBO::FETCH_ASSOC);
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
 	/**
@@ -20,7 +20,7 @@ class nguoidung extends connectDB
 	 */
 	public function logIn($user='', $pass='')
 	{
-		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`, IF(LENGTH(`code`) = 32, 0 , 1) AS 'actived'
+		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `avatar_img`, `namsinh`, IF(LENGTH(`code`) = 32, 0 , 1) AS 'actived'
 			FROM `nguoidung` 
 			WHERE (email = ? OR sdt = ?)
 			AND matkhau = ?;");
@@ -38,7 +38,7 @@ class nguoidung extends connectDB
 	 */
 	public function getFromKey($key='')
 	{
-		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh` 
+		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`, `avatar_img` 
 			FROM `nguoidung` 
 			WHERE email like ? OR sdt like ?");
 		$stmt->execute(array($key, $key));
@@ -54,7 +54,7 @@ class nguoidung extends connectDB
 	 */
 	public function getFromId($id)
 	{
-		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh` 
+		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`, `avatar_img`  
 			FROM `nguoidung` 
 			WHERE ma = ?");
 		$stmt->execute(array($id));
@@ -152,7 +152,7 @@ class nguoidung extends connectDB
 		return false;
 	}
 	
-	public function addUser($mail, $phone, $pass, $name, $birthyear, $avatar, $code)
+	public function addUser($mail, $phone, $pass, $name, $birthyear, $avatarName)
 	{
 		if (strlen($mail)==0 || strlen($phone)==0 || strlen($pass)==0 || strlen($name)==0 || strlen($birthyear)==0) {
 			return -3;
@@ -161,8 +161,8 @@ class nguoidung extends connectDB
 		} elseif ($this->samePhone($phone)) {
 			return -1;
 		} else {
-			$stmt = $this->getConnect()->prepare("INSERT INTO `nguoidung`(`email`, `sdt`, `hoten`, `namsinh`, `matkhau`, `avatar`) VALUES (?,?,?,?,?,?)");
-			$stmt->execute(array($mail, $phone, $name, $birthyear, hash('whirlpool',$pass), $avatar));
+			$stmt = $this->getConnect()->prepare("INSERT INTO `nguoidung`(`email`, `sdt`, `hoten`, `namsinh`, `matkhau`, `avatar_img`) VALUES (?,?,?,?,?,?)");
+			$stmt->execute(array($mail, $phone, $name, $birthyear, hash('whirlpool',$pass), $avatarName));
 
 			return $this->getConnect()->lastInsertId();
 		}
@@ -174,7 +174,6 @@ class nguoidung extends connectDB
 			FROM `nguoidung` 
 			WHERE code like ?");
 		$stmt->execute(array($code));
-		$stmt->execute();
 		
 		while($row=$stmt->fetch(PDO::FETCH_ASSOC))
 			return TRUE;
@@ -203,6 +202,16 @@ class nguoidung extends connectDB
 			$stmt->execute(array($code));
 			
 			return $stmt->rowCount()==1;
+	}
+
+	public function search($key='')
+	{
+		$stmt= $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `avatar_img`
+			FROM `nguoidung` 
+			WHERE `email` LIKE ? OR `sdt` LIKE ? OR `hoten` LIKE ?;");
+		$stmt->execute(array($key,$key,'%'.$key.'%'));
+		//$stmt->debugDumpParams();
+		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 }
 

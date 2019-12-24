@@ -28,7 +28,6 @@
 
 		    	$(".btn").attr("disabled", true);
 		    	return true;
-
 		    });
 		}
 	});
@@ -42,5 +41,14 @@
 </html>
 <?php 
 //var_dump($_POST);
+/*
+	$(document).ready(function(){
+	  var contentHtml= document.documentElement.innerHTML;
+	  alert(contentHtml);
+	  contentHtml=contentHtml.replace('﻿','');
+	  document.write(contentHtml);
+	});
+
+*/
 //var_dump($_FILES); 
 ?>
