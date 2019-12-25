@@ -2,12 +2,12 @@
 <div class="container">
   <?php 
   if (!(empty($_SESSION['user']) && empty($_COOKIE['user']))) {
-    header('Location: index.php');
+    redirectTo("Đã đăng nhập rồi nên không thể thực hiện chức năng.");
   } else {
     ?>
     <h1>Đăng ký tài khoản</h1>
 
-  <?php 
+    <?php 
     if (isset($_POST['formName']) && "register" == $_POST['formName']) {
       $nguoidung=new nguoidung;
       echo '<div class="alert alert-warning" role="alert">';
@@ -38,7 +38,7 @@
       }
       echo '</div>';
     } 
-  ?>
+    ?>
     <?php if (!isset($daDangKyThanhCong)): ?>
       <form action="register.php" method="POST" enctype="multipart/form-data" id="formSubmitted">
         <input type="hidden" name="formName" value="register">
@@ -62,12 +62,48 @@
         </div>
         <div class="custom-file">
           <input type="file" accept="image/*" name="avatar" class="custom-file-input" id="avatarFile" required>
-          <label class="custom-file-label" for="avatarFile">Chọn hình đại diện</label>
+          <label class="custom-file-label" for="avatarFile" id="avatarFileName">Chọn hình đại diện</label>
+        </div>
+        <div class="form-group">
+          <center>
+            <div class="gallery"></div>
+          </center>
         </div>
         <center>
           <button type="submit" class="btn btn-primary mt-3">Đăng ký</button>
         </center>
       </form>
+      
+      <script>
+        var imagesPreview = function(input, placeToInsertImagePreview) {
+
+          if (input.files) {
+            var filesAmount = input.files.length;
+            var limitFileUpload = <?php echo file_upload_max_size(); ?>;
+            var limitFileUploadMB=limitFileUpload/1024/1024;
+            $(placeToInsertImagePreview).empty();
+            for (i = 0; i < filesAmount; i++) {
+              if (input.files[i].size>limitFileUpload) {
+                alert("File "+input.files[i].name+" sẽ không được lưu vì kích thước lớn hơn giới hạn server.\nLưu ý: Chỉ lưu file có kích thước "+limitFileUploadMB+"MB trở xuống.");
+                return false;
+              } else {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                  $($.parseHTML('<img>')).attr('src', event.target.result).attr('height','100px').attr('class','rounded').attr('style','margin: 3px;').appendTo(placeToInsertImagePreview);
+                }
+                reader.readAsDataURL(input.files[i]);
+              }
+            }
+          }
+          return true;
+        };
+
+        $("body").on("change","input#avatarFile", function() {
+          if(!imagesPreview(this, 'div.gallery'))
+            $("label#avatarFileName").val("");;
+        });
+      </script>
     <?php endif ?>
     <?php 
   }

@@ -51,6 +51,11 @@ include 'header.php';
         <label class="custom-file-label" for="avatar">Chọn ảnh đại diện...</label>
         <div class="invalid-feedback"></div>
       </div>
+      <div class="form-group">
+        <center>
+        <div class="gallery"></div>
+        </center>
+      </div>
       <div class="row mt-3">
         <div class="col" style="text-align: left;">
           <button type="submit" class="btn btn-primary">Cập nhật</button>
@@ -58,6 +63,38 @@ include 'header.php';
         </div>
       </div>
     </form>
+    <script>
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+
+      if (input.files) {
+        var filesAmount = input.files.length;
+        var limitFileUpload = <?php echo file_upload_max_size(); ?>;
+        var limitFileUploadMB=limitFileUpload/1024/1024;
+        $(placeToInsertImagePreview).empty();
+        for (i = 0; i < filesAmount; i++) {
+          if (input.files[i].size>limitFileUpload) {
+            alert("File "+input.files[i].name+" sẽ không được lưu vì kích thước lớn hơn giới hạn server.\nLưu ý: Chỉ lưu file có kích thước "+limitFileUploadMB+"MB trở xuống.");
+            input.empty();
+            return false;
+          } else {
+          var reader = new FileReader();
+
+          reader.onload = function(event) {
+            $($.parseHTML('<img>')).attr('src', event.target.result).attr('height','100px').attr('class','rounded').attr('style','margin: 3px;').appendTo(placeToInsertImagePreview);
+          }
+          reader.readAsDataURL(input.files[i]);
+          }
+        }
+      }
+      return true;
+    };
+
+    $("body").on("change","input#avatar", function() {
+      if(!imagesPreview(this, 'div.gallery')){
+
+      }
+    });
+    </script>
   </div>
   <?php 
 }

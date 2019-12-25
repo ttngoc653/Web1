@@ -23,7 +23,7 @@
 		var act=$(this).val();
 		var idPartner=$(this).data('partnerid');
 		var elementChanged=$(this).parent();
-
+		var elementFollow=elementChanged.parent().find('button#actFollow');
 
 		$.ajax({
 			url:"<?php echo getCurUrl(); ?>/../ajaxProcess/actionFriend.php",
@@ -34,11 +34,20 @@
 				if (act.localeCompare("add")==0) {
 					elementChanged.append(getButtonSent());
 					elementChanged.append(getButtonDelete(idPartner));
+
+					elementFollow.val("add");
+					actionProcessFollow(elementFollow);
 				} else if (act.localeCompare("accept")==0) {
 					elementChanged.append(getButtonFriending());
 					elementChanged.append(getButtonDestroy(idPartner));
+
+					elementFollow.val("add");
+					actionProcessFollow(elementFollow);
 				} else if (act.localeCompare("delete")==0 || act.localeCompare("destroy")==0) {
 					elementChanged.append(getButtonAdd(idPartner));
+
+					elementFollow.val("delete");
+					actionProcessFollow(elementFollow);
 				} 
 			}
 		})
