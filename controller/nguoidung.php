@@ -161,7 +161,7 @@ class nguoidung extends connectDB
 		} elseif ($this->samePhone($phone)) {
 			return -1;
 		} else {
-			$stmt = $this->getConnect()->prepare("INSERT INTO `nguoidung`(`email`, `sdt`, `hoten`, `namsinh`, `matkhau`, `avatar_img`) VALUES (?,?,?,?,?,?)");
+			$stmt = $this->getConnect()->prepare("INSERT INTO `nguoidung`(`email`, `sdt`, `hoten`, `namsinh`, `matkhau`, `avatar`) VALUES (?,?,?,?,?,?)");
 			$stmt->execute(array($mail, $phone, $name, $birthyear, hash('whirlpool',$pass), $avatarName));
 
 			return $this->getConnect()->lastInsertId();
