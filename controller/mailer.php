@@ -30,6 +30,8 @@ class relatedemail {
 
 		$mail->Body = $content;
 
+		$mail->IsHTML(true); 
+
 		$mail->AtlBody = $content;
 
 		if (!$mail->Send()) {
@@ -46,6 +48,11 @@ class relatedemail {
 
 	static function sendActiveAccount($email, $code) {
 		return relatedemail::sendMail($email,"Kich hoat tai khoan","Click vào link sau để kích hoạt tài khoản: ".linkActiveAccount()."?code=" . $code,"Email kích hoạt tài khoản đã được gửi.");
+	}
+
+	static function sentNotification($email, $title, $content)
+	{
+		return relatedemail::sendMail($email, $title, $content, "Email thông báo đã gửi.");
 	}
 }
 
