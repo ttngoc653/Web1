@@ -23,7 +23,7 @@ class nguoidung extends connectDB
 		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `avatar_img`, `namsinh`, IF(LENGTH(`code`) = 32, 0 , 1) AS 'actived'
 			FROM `nguoidung` 
 			WHERE (email = ? OR sdt = ?)
-			AND matkhau = ?;");
+			AND matkhau = ?");
 		$stmt->execute(array($user, $user, hash('whirlpool',$pass)));
 		// $stmt->debugDumpParams();
 		
