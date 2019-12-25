@@ -126,8 +126,7 @@ class trangthai extends connectDB {
 					banbe.tinhtrang=1)) || 
 				trangthai.nguoidang = ? || 
 				(trangthai.nguoidang IN (SELECT ndbiid FROM theodoi WHERE nddangid = ?) AND 
-					trangthai.riengtu = 2)) 
-			".$strIds." 
+					trangthai.riengtu = 2))  
 			ORDER BY trangthai.thoigiandang DESC 
 			LIMIT 10;");
 		$stmt->execute(array($idUser, $idUser, $idUser, $idUser, $idUser));
