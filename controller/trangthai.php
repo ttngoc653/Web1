@@ -100,7 +100,7 @@ class trangthai extends connectDB {
 				(trangthai.nguoidang IN (SELECT ndbiid FROM theodoi WHERE nddangid = ?) AND 
 					trangthai.riengtu = 2)) 
 			ORDER BY trangthai.thoigiandang DESC
-			LIMIT 10;");
+			LIMIT 10");
 		$stmt->execute(array($idUser, $idUser, $idUser, $idUser, $idUser));
 		
 		//$stmt->debugDumpParams();
