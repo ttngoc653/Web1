@@ -125,7 +125,7 @@ class nguoidung extends connectDB
 		// $stmt->debugDumpParams();
 		while($row=$stmt->fetch(PDO::FETCH_ASSOC)){
 			
-			$stmt = $this->getConnect()->prepare("UPDATE `nguoidung` SET `sdt`= ?, `hoten`= ?, `birthyear` = ? WHERE `ma` LIKE ?");
+			$stmt = $this->getConnect()->prepare("UPDATE `nguoidung` SET `sdt`= ?, `hoten`= ?, `namsinh` = ? WHERE `ma` LIKE ?");
 			$stmt->execute(array($phone, $name, $birthyear, $id));
 			// $stmt->debugDumpParams();
 			return $stmt->rowCount()>=0;

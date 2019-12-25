@@ -10,7 +10,7 @@ include 'header.php';
     if (isset($_POST['act'])) {
       if (empty($_POST['showname']) || empty($_POST['phone']) || empty($_POST['birthyear'])) {
         echo '<script type="text/javascript" charset="utf-8">alert("Không thay đổi được do thiếu thông tin.");</script>';
-      } elseif ($_FILES['image']['avatar'] != 0 &&
+      } elseif ($_FILES['avatar']['error'] != 0 &&
         $nguoidung->changeInfo($infoUser['ma'], $_POST['showname'], $_POST['phone'], $_POST['birthyear'])){
         echo '<script type="text/javascript" charset="utf-8">alert("Thông tin đã được cập nhật.");</script>';
       } else {
