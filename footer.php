@@ -1,7 +1,10 @@
 
 </div>
 <footer style="margin: 10px;">
-	
+	<!-- <?=ini_set('post_max_size', '64M');
+ini_set('upload_max_filesize', '64M');?>
+	 <?=ini_get('upload_max_filesize')?>
+ -->
 </footer>
 <script>
 	$(document).ready(function () {

@@ -51,4 +51,5 @@ include 'trangthai.php';
 include 'thich.php';
 include 'binhluan.php';
 include 'thongbao.php';
+include 'theodoi.php';
 ?>
