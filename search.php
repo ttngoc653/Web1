@@ -56,8 +56,8 @@ include 'header.php';
 		if (count($listUser)==0 || (count($listUser)==1 && (isset($infoUser) && $listUser[0]['ma']==$infoUser['ma']))) {
 			echo '	<div class="alert" role="alert" style="border-color: #c6c8ca; color: black;"><center><h2>Không tìm thấy bất cứ kết quả nào</h2></center></div>';
 		} else {
-			include 'funcOfWall.php';
 			include 'funcOfFollow.php';
+			include 'funcOfWall.php';
 		}
 	}
 	?>

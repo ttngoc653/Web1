@@ -6,6 +6,6 @@ if (isset($_SESSION['user'])) {
 elseif (isset($_COOKIE['user'])) {
   setcookie('user',NULL,0);
 }
-header('Location: index.php');
+	redirectTo("");
  ?>
 <?php include 'footer.php'; ?>

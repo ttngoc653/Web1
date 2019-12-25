@@ -19,7 +19,6 @@ $("body").on("click", "button#itemLike.btn", function() { //$("button#itemLike.b
 		var $statuId=$(this).data('statuid');
 		var numberLiked=0;
 		var elementSelected=$(this);
-
 		if ($(this).hasClass("btn-light")) {
 			$(this).removeClass('btn-light').addClass('btn-secondary');
 
@@ -86,7 +85,7 @@ $("body").on("click", "button#itemLike.btn", function() { //$("button#itemLike.b
 			data:formData,
 			success:function(data) {
 				if (data!=1) {
-					alert(data);
+					//alert(data);
 				}
 			}
 		})

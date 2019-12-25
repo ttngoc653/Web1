@@ -89,14 +89,16 @@ class trangthai extends connectDB {
 			nguoidung.avatar, 
 			trangthai.thoigiandang, 
 			trangthai.noidung
-			FROM trangthai, nguoidung 
+			FROM trangthai, nguoidung
 			WHERE nguoidung.ma=trangthai.nguoidang AND 
-			((trangthai.riengtu != 0 AND trangthai.nguoidang != ?) || trangthai.nguoidang = ?) AND 
-			trangthai.nguoidang IN (SELECT DISTINCT IF(banbe.ban1 = ?, banbe.ban2, banbe.ban1) 
-			FROM banbe 
-			WHERE (banbe.ban1=? OR 
-			banbe.ban2=?) 
-			AND banbe.tinhtrang=1) 
+				((trangthai.riengtu != 0 AND 
+					trangthai.nguoidang IN (SELECT DISTINCT IF(banbe.ban1 = ?, banbe.ban2, banbe.ban1) 
+					FROM banbe 
+					WHERE (banbe.ban1=? OR banbe.ban2=?) AND 
+					banbe.tinhtrang=1)) || 
+				trangthai.nguoidang = ? || 
+				(trangthai.nguoidang IN (SELECT ndbiid FROM theodoi WHERE nddangid = ?) AND 
+					trangthai.riengtu = 2)) 
 			ORDER BY trangthai.thoigiandang DESC
 			LIMIT 10;");
 		$stmt->execute(array($idUser, $idUser, $idUser, $idUser, $idUser));
@@ -114,17 +116,19 @@ class trangthai extends connectDB {
 			nguoidung.hoten, 
 			nguoidung.avatar, 
 			trangthai.thoigiandang, 
-			trangthai.noidung
+			trangthai.noidung 
 			FROM trangthai, nguoidung 
 			WHERE nguoidung.ma=trangthai.nguoidang AND 
-			((trangthai.riengtu != 0 AND trangthai.nguoidang != ?) || trangthai.nguoidang = ?) AND 
-			trangthai.nguoidang IN (SELECT DISTINCT IF(banbe.ban1 = ?, banbe.ban2, banbe.ban1) 
-			FROM banbe 
-			WHERE (banbe.ban1=? OR 
-			banbe.ban2=?) 
-			AND banbe.tinhtrang=1)  
+				((trangthai.riengtu != 0 AND 
+					trangthai.nguoidang IN (SELECT DISTINCT IF(banbe.ban1 = ?, banbe.ban2, banbe.ban1) 
+					FROM banbe 
+					WHERE (banbe.ban1=? OR banbe.ban2=?) AND 
+					banbe.tinhtrang=1)) || 
+				trangthai.nguoidang = ? || 
+				(trangthai.nguoidang IN (SELECT ndbiid FROM theodoi WHERE nddangid = ?) AND 
+					trangthai.riengtu = 2)) 
 			".$strIds." 
-			ORDER BY trangthai.thoigiandang DESC
+			ORDER BY trangthai.thoigiandang DESC 
 			LIMIT 10;");
 		$stmt->execute(array($idUser, $idUser, $idUser, $idUser, $idUser));
 		

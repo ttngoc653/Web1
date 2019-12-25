@@ -12,7 +12,19 @@ if (isset($_GET['id'])) {
 		echo ' <script> location.replace("profile.php"); </script>';
 	} elseif ($user!=NULL) {
 		?>
-		<h2 style="text-align: center;"><img src="data:image;base64,<?php echo $user['avatar']; ?>" width="150px" class="rounded-circle"> Tường nhà của <?php echo $user['hoten']; ?></h2>
+		<h2 style="text-align: center;">
+			<img src="data:image;base64,<?php echo $user['avatar']; ?>" width="150px" class="rounded-circle"> Tường nhà của <?php echo $user['hoten'];
+
+				$theodoi=new theodoi;
+				if ($theodoi->check($infoUser['ma'],$_GET['id'])) {
+					echo '<button id="actFollow" value="delete" data-partnerid="'.$_GET['id'].'" class="btn btn-secondary" style="margin-left: 10px;">Bỏ theo dõi</button>';
+				}
+				else {
+					echo '<button id="actFollow" value="add" data-partnerid="'.$_GET['id'].'" class="btn btn-secondary" style="margin-left: 10px;">Theo dõi</button>';
+				}
+				include 'funcOfFollow.php'; 
+			?>
+		</h2>
 		<?php if (isset($infoUser)): ?>
 			<div style="margin: auto; text-align: center;">
 				<?php

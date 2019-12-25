@@ -13,19 +13,21 @@
 	function actionProcessFollow(buttonActFollow) {
 		var act=buttonActFollow.val();
 		var idPartner=buttonActFollow.data('partnerid');
-		var elementChanged=buttonActFollow.parent();
+		var elementChanged=buttonActFollow;
 
 		$.ajax({
 			url:"<?php echo getCurUrl(); ?>/../ajaxProcess/actionFollow.php",
 			method:"POST",
 			data:{userid:<?php echo isset($infoUser)?$infoUser['ma']: "0"; ?>,partnerid:idPartner,act:act},
 			success:function(data) {
+				//alert(data);
 				elementChanged.empty();
 				if (act.localeCompare("add")==0) {
-					elementChanged.append(getButtonFollowing());
-					elementChanged.append(getButtonUnfollow(idPartner));
+					elementChanged.text("Bỏ theo dõi");
+					elementChanged.val("delete");
 				} else if (act.localeCompare("delete")==0) {
-					elementChanged.append(getButtonFollow(idPartner));
+					elementChanged.text("Theo dõi");
+					elementChanged.val("add");
 				} 
 			}
 		})
