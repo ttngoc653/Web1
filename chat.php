@@ -7,7 +7,7 @@ include 'header.php';
     background: #f8f8f8 none repeat scroll 0 0;
     float: left;
     overflow: hidden;
-    width: 40%; border-right:1px solid #c4c4c4;
+    width: 30%; border-right:1px solid #c4c4c4;
   }
   .inbox_msg {
     border: 1px solid #c4c4c4;
@@ -21,7 +21,6 @@ include 'header.php';
   .srch_bar {
     display: inline-block;
     text-align: right;
-    width: 60%; padding:
   }
   .headind_srch{ padding:10px 29px 10px 20px; overflow:hidden; border-bottom:1px solid #c4c4c4;}
 
@@ -30,7 +29,7 @@ include 'header.php';
     font-size: 21px;
     margin: auto;
   }
-  .srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; padding:2px 0 4px 6px; background:none;}
+  .srch_bar input{ border:1px solid #cdcdcd; border-width:0 0 1px 0; width:80%; background:none;}
   .srch_bar .input-group-addon button {
     background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
     border: medium none;
@@ -95,7 +94,7 @@ include 'header.php';
   .mesgs {
     float: left;
     padding: 10px 5px 0 5px;
-    width: 60%;
+    width: 70%;
     top: 0;
     bottom: 0;
   }
@@ -105,7 +104,7 @@ include 'header.php';
     border-radius: 3px;
     font-size: 14px;
     margin: 0; color:#fff;
-    padding: 5px 10px 5px 12px;
+    padding: 5px 10px 5px 5px;
     width:100%;
   }
   .outgoing_msg{ overflow:hidden; margin:26px 0 26px;}
@@ -163,7 +162,7 @@ include 'header.php';
             <div class="chat_people">
               <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
               <div class="chat_ib">
-                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                <h5>Sunil Rajput<span class="badge badge-danger" style="float: left; margin-right: 10px;">0</span> <span class="chat_date">Dec 25</span></h5>
                 <p>Test, which is a new approach to have all solutions 
                 astrology under one roof.</p>
               </div>
@@ -173,7 +172,7 @@ include 'header.php';
             <div class="chat_people">
               <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
               <div class="chat_ib">
-                <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                <h5><span class="badge badge-danger" style="float: left; margin-right: 10px;">0</span>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
                 <p>Test, which is a new approach to have all solutions 
                 astrology under one roof.</p>
               </div>
@@ -233,23 +232,6 @@ include 'header.php';
       </div>
       <div class="mesgs">
         <div class="msg_history">
-          <div class="incoming_msg">
-            <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"/> </div>
-            <div class="received_msg">
-              <div class="received_withd_msg">
-                <p>Test which is a new approach to have all
-                solutions</p>
-                <span class="time_date"> 11:01 AM    |    June 9</span>
-              </div>
-            </div>
-          </div>
-          <div class="outgoing_msg">
-            <div class="sent_msg">
-              <p>Test which is a new approach to have all
-              solutions</p>
-              <span class="time_date"> 11:01 AM    |    June 9</span> 
-            </div>
-          </div>
           <div class="incoming_msg">
             <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
             <div class="received_msg">
@@ -329,7 +311,9 @@ include 'header.php';
           </div>
           <div class="outgoing_msg">
             <div class="sent_msg">
-              <p>Apollo University, Delhi, India Test</p>
+              <p><button type="button" class="close" aria-label="Close" style="float: left;">
+                <span aria-hidden="true">&times;</span>
+              </button>Apollo University, Delhi, India Test</p>
               <span class="time_date"> 11:01 AM    |    Today</span> 
             </div>
           </div>
@@ -369,5 +353,7 @@ include 'header.php';
   $('div.msg_history').scrollTop($('div.msg_history')[0].scrollHeight);
 </script>
 <?php 
+//$trochuyen=new trochuyen;
+//var_dump($trochuyen->getListChat(3));
 include 'footer.php';
 ?>

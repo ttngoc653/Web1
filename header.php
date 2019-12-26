@@ -81,10 +81,9 @@ include "controller/incl.php";
         ?>
         <div class="dropdown">
           <a class="nav-item nav-lin dropdown-toggle" data-toggle="dropdown" onclick="showListNotification()" style="cursor: pointer;">
-            <i class="far fa-bell"><span class="badge badge-success" id="countNotifiNoSee">Info</span></i>
+            <i class="far fa-bell"><span class="badge badge-success" id="countNotifiNoSee">0</span></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" id="listNotifi" style="z-index: 10; max-height: 320px; overflow: auto; margin-top: 10px;">
-            fghjkkhgf
           </div>
         </div>
         <script>

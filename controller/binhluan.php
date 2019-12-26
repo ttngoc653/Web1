@@ -40,7 +40,7 @@ class binhluan extends connectDB {
 
 	public function delete($idUser,$idStatu,$idCommentParent = NULL)
 	{
-		if ($idComment == NULL) {
+		if ($idCommentParent == NULL) {
 			$stmt = $this->getConnect()->prepare("DELETE FROM `binhluan` WHERE `ngbinhluanid` = ? AND `matt` =  ?;");
 			$stmt->execute(array($idUser, $idStatu));
 		} 
