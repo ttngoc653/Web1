@@ -7,7 +7,7 @@ class nguoidung extends connectDB
 	// lấy tất cả thông tin người dùng hiện có
 	public function getAll()
 	{
-		$stmt= $this->getConnect()->query("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`, `avatar_img`  
+		$stmt= $this->getConnect()->query("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh` 
 			FROM `nguoidung`");
 		
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -20,7 +20,7 @@ class nguoidung extends connectDB
 	 */
 	public function logIn($user='', $pass='')
 	{
-		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `avatar_img`, `namsinh`, IF(LENGTH(`code`) = 32, 0 , 1) AS 'actived'
+		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`, IF(LENGTH(`code`) = 32, 0 , 1) AS 'actived'
 			FROM `nguoidung` 
 			WHERE (email = ? OR sdt = ?)
 			AND matkhau = ?");
@@ -38,7 +38,7 @@ class nguoidung extends connectDB
 	 */
 	public function getFromKey($key='')
 	{
-		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`, `avatar_img` 
+		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`  
 			FROM `nguoidung` 
 			WHERE email like ? OR sdt like ?");
 		$stmt->execute(array($key, $key));
@@ -54,7 +54,7 @@ class nguoidung extends connectDB
 	 */
 	public function getFromId($id)
 	{
-		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh`, `avatar_img`  
+		$stmt = $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `namsinh` 
 			FROM `nguoidung` 
 			WHERE ma = ?");
 		$stmt->execute(array($id));
@@ -206,7 +206,7 @@ class nguoidung extends connectDB
 
 	public function search($key='')
 	{
-		$stmt= $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`, `avatar_img`
+		$stmt= $this->getConnect()->prepare("SELECT `ma`, `email`, `sdt`, `hoten`, `avatar`
 			FROM `nguoidung` 
 			WHERE `email` LIKE ? OR `sdt` LIKE ? OR `hoten` LIKE ?;");
 		$stmt->execute(array($key,$key,'%'.$key.'%'));
