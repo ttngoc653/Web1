@@ -20,6 +20,7 @@
 				?>
 				<div class="list-group-item col-6"><div>
 					<a href="wall.php?id=<?php echo $i['ban']; ?>"style="font-size: 18px;"><img src="<?php echo $imgSrc; ?>" height="36px" class="rounded-circle" style="margin-right: 15px;"><?php echo $ban['hoten']; ?></a> 
+					<a href="/chat.php?id=<?php echo $i['ban']; ?>">(Nhắn tin)</a>
 					<?php
 					$theodoi=new theodoi;
 					if ($theodoi->check($infoUser['ma'],$i['ban'])) {
@@ -48,7 +49,7 @@
 				}
 				?>
 				<div class="list-group-item col-6"><div>
-					<a href="wall.php?id=<?php echo $i['ban']; ?>"style="font-size: 18px;"><img src="<?php echo $imgSrc; ?>" height="36px" class="rounded-circle" style="margin-right: 15px;"><?php echo $ban['hoten']; ?></a>
+					<a href="wall.php?id=<?php echo $i['ban']; ?>"style="font-size: 18px;"><img src="<?php echo $imgSrc; ?>" height="36px" class="rounded-circle" style="margin-right: 15px;"><?php echo $ban['hoten']; ?></a> <a href="/chat.php?id=<?php echo $i['ban']; ?>">(Nhắn tin)</a>
 					<?php
 					$theodoi=new theodoi;
 					if ($theodoi->check($infoUser['ma'],$i['ban'])) {

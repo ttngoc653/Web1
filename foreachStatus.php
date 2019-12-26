@@ -24,7 +24,9 @@
 										<option value="1" <?php if ($i['riengtu']==1): ?>selected<?php endif ?>>Bạn bè</option>
 										<option value="0" <?php if ($i['riengtu']==0): ?>selected<?php endif ?>>Chỉ mình tôi</option>
 									</select>
-								<?php } ?>
+								<?php } else {
+									echo '<a href="/chat.php?id='.$i['nguoidang'].'">(Nhắn tin)</a>';
+								} ?>
 							</td>
 						</tr>
 					</table>

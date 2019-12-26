@@ -29,12 +29,14 @@ class trochuyen extends connectDB {
 			GROUP BY t1.hoithoaima
 			HAVING COUNT(*) = 2;");
 		$stmt->execute(array($idUser,$idPartner));	
-		return $stmt->rowCount()>=1;
+		while($row=$stmt->fetch(PDO::FETCH_ASSOC))
+			return $row['hoithoaima'];
+		return NULL;
 	}
 
 	public function createOneOne($idUser,$idPartner)
 	{
-		if (!$this->checkOneOne($idUser,$idPartner)) {
+		if ($this->checkOneOne($idUser,$idPartner)!=NULL) {
 			$stmt = $this->getConnect()->prepare("INSERT INTO `trochuyen`(`ndtaoid`) VALUES (?)");
 			$stmt->execute(array($idUser));	
 			//$stmt->debugDumpParams();
@@ -58,6 +60,7 @@ class trochuyen extends connectDB {
 			FROM trochuyenlichsu l1 INNER JOIN nguoidung n1 ON l1.ndgui = n1.ma
 			WHERE l1.thoaima = ? AND l1.an = 0
 			AND l1.thoaima IN (SELECT t1.hoithoaima FROM trochuyenthamgia t1 WHERE t1.ndtgma = ?);");
+		//$stmt->debugDumpParams();
 		$stmt->execute(array($idRoom, $idUser));
 
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -70,11 +73,11 @@ class trochuyen extends connectDB {
 		return $stmt->rowCount()==1;
 	}
 
-	public function hiddenChat($idUser,$idPartner)
+	public function hiddenMessage($idUser,$idMessage)
 	{
 		if (!$this->checkUserChat($idUser,$idPartner)) {
 			$stmt = $this->getConnect()->prepare("UPDATE `trochuyenlichsu` SET `an`= 1 WHERE `ndgui` = ? AND `ma` = ?;");
-			$stmt->execute(array($idUser, $idPartner));
+			$stmt->execute(array($idUser, $idMessage));
 			return $stmt->rowCount()==1;
 		}
 		return false;
@@ -89,7 +92,7 @@ class trochuyen extends connectDB {
 
 	public function addChat($idRoom, $idUser, $content)
 	{
-		if ($this->getUserInRoom($idRoom,$idUser)) {
+		if ($this->checkUserInRoom($idRoom,$idUser)) {
 			$stmt = $this->getConnect()->prepare("INSERT INTO `trochuyenlichsu`(`ndgui`, `thoaima`, `noidung`) VALUES (?,?,?);");
 			$stmt->execute(array($idUser,$idRoom,$content));	
 			//$stmt->debugDumpParams();
@@ -123,7 +126,13 @@ class trochuyen extends connectDB {
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
+	public function updateSee($idUser,$idRoom)
+	{
+		$stmt = $this->getConnect()->prepare("UPDATE `trochuyenthamgia` SET `ngayxemcuoicung`= CURRENT_TIMESTAMP WHERE `hoithoaima`=? AND `ndtgma`=?;");
+		$stmt->execute(array($idRoom, $idUser));
 
+		return $stmt->rowCount()==1;
+	}
 }
 
 ?>

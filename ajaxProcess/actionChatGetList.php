@@ -6,9 +6,9 @@ if (isset($_POST['userid'])) {
 	$listChat=$trochuyen->getListChat($_POST['userid']);
 
 	foreach ($listChat as $i) {
-		$ban=$nguoidung->getFormId($i['ban']);
+		$ban=$nguoidung->getFromId($i['ban']);
 		?>
-		<div class="chat_list">
+		<div class="chat_list" data-chatkey="<?php echo $i['thoaima']; ?>">
 			<div class="chat_people" id="loadContent" data-roomid="<?php echo $i['thoaima']; ?>">
 				<div class="chat_img"> <img src="<?php echo "data:image;base64,".$ban['avatar']; ?>" alt="<?php echo $ban['hoten']; ?>"> </div>
 				<div class="chat_ib">

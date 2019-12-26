@@ -86,6 +86,7 @@ include "controller/incl.php";
           <div class="dropdown-menu dropdown-menu-right" id="listNotifi" style="z-index: 10; max-height: 320px; overflow: auto; margin-top: 10px;">
           </div>
         </div>
+        <a href="chat.php" class="btn btn-outline-success"><i class="fa fa-comments" aria-hidden="true"><span class="badge badge-danger" id="countNotifiChat">0</span></i></i></a>
         <script>
           $("body").on("click","#toShowOtherNotification",function(){
             var arrayNotifi = ["-1"];
@@ -131,6 +132,28 @@ include "controller/incl.php";
                 method:'POST',
                 data:{userid:<?php echo $infoUser['ma'] ?>},
                 success:function(data) {
+                  if (data==0) {
+                   elementAdd.hide(); 
+                  } else {
+                   elementAdd.show(); 
+                  }
+                  elementAdd.html(data);
+                }
+              })
+          },100);
+
+          setInterval(function() {
+            var elementAdd=$("span#countNotifiChat");
+              $.ajax({
+                url:"<?php echo getCurUrl(); ?>/../ajaxProcess/actionChatCountNoSee.php",
+                method:'POST',
+                data:{userid:<?php echo $infoUser['ma'] ?>},
+                success:function(data) {
+                  if (data==0) {
+                   elementAdd.hide(); 
+                  } else {
+                   elementAdd.show(); 
+                  }
                   elementAdd.html(data);
                 }
               })
