@@ -26,7 +26,9 @@ if (isset($_POST['userid']) && isset($_POST['roomid'])) {
 					</div>
 					<div class="received_msg">
 						<div class="received_withd_msg">
-							<p><b><?php echo $i['hoten']; ?></b>: <?php echo $i['noidung']; ?></p>
+							<p><b><?php echo $i['hoten']; ?></b>: <?php echo $i['noidung']; ?><button alt="Nhấp để xóa" type="button" class="close" aria-label="Close" id='delMessage' data-idchat="<?php echo $i['matin']; ?>" style="float: right;">
+							<span aria-hidden="true">&times;</span>
+							</button><?php echo $i['noidung']; ?></p>
 							<span class="time_date"><?php echo $i['thoigiangui']; ?></span>
 						</div>
 					</div>

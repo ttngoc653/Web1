@@ -73,11 +73,12 @@ class trochuyen extends connectDB {
 		return $stmt->rowCount()==1;
 	}
 
+	// uncheck iduser
 	public function hiddenMessage($idUser,$idMessage)
 	{
 		if (!$this->checkUserChat($idUser,$idPartner)) {
-			$stmt = $this->getConnect()->prepare("UPDATE `trochuyenlichsu` SET `an`= 1 WHERE `ndgui` = ? AND `ma` = ?;");
-			$stmt->execute(array($idUser, $idMessage));
+			$stmt = $this->getConnect()->prepare("UPDATE `trochuyenlichsu` SET `an`= 1 WHERE `ma` = ?;");
+			$stmt->execute(array($idMessage));
 			return $stmt->rowCount()==1;
 		}
 		return false;
