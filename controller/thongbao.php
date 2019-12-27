@@ -29,7 +29,7 @@ class thongbao extends connectDB {
 	public function convertSeen($idlog)
 	{
 		$stmt = $this->getConnect()->prepare("UPDATE `thongbao` SET `daxem`=1 WHERE `ma`= ?;");
-		$stmt->execute(array($idLog));	
+		$stmt->execute(array($idlog));	
 		return $stmt->rowCount();	
 	}
 }

@@ -105,6 +105,15 @@ include "controller/incl.php";
               }
             })
           });
+          $("body").on("click","#statusItem",function() {
+            $.ajax({
+              url:"<?php echo getCurUrl(); ?>/../ajaxProcess/actionNotificationCheckSeen.php",
+              method:'POST',
+              data:{notificationid:$(this).data("idnotification")},
+              success:function(data) {
+              }
+            })
+          });
           function showListNotification(){
             if($("div#listNotifi").is(":visible")){
               //alert("showed -> hide");
