@@ -81,10 +81,10 @@ include "controller/incl.php";
       if(isset($infoUser)) {
         ?>
         <div class="dropdown">
-          <a class="nav-item nav-lin dropdown-toggle" data-toggle="dropdown" onclick="showListNotification()" style="cursor: pointer;">
-            <i class="far fa-bell"><span class="badge badge-success" id="countNotifiNoSee">0</span></i>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" id="listNotifi" style="z-index: 10; max-height: 320px; overflow: auto; margin-top: 10px;">
+          <button class="btn btn-outline-success dropdown-toggle" type="button" data-toggle="dropdown" onclick="showListNotification()" style="cursor: pointer; margin: 5px 5px 5px 5px;">
+            <i class="far fa-bell"><span class="badge badge-warning" id="countNotifiNoSee">0</span></i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right" id="listNotifi" style="z-index: 10; max-height: 320px; overflow: auto; margin-top: 5px;">
           </div>
         </div>
         <a href="chat.php" class="btn btn-outline-success"><i class="fa fa-comments" aria-hidden="true"><span class="badge badge-danger" id="countNotifiChat">0</span></i></i></a>
