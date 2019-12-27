@@ -25,7 +25,7 @@
 										<option value="0" <?php if ($i['riengtu']==0): ?>selected<?php endif ?>>Chỉ mình tôi</option>
 									</select>
 								<?php } else {
-									echo '<a href="/chat.php?id='.$i['nguoidang'].'">(Nhắn tin)</a>';
+									echo '<a href="./chat.php?id='.$i['nguoidang'].'">(Nhắn tin)</a>';
 								} ?>
 							</td>
 						</tr>
