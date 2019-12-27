@@ -46,6 +46,10 @@ include 'header.php';
         <label for="phone">Số điện thoại</label>
         <input type="phone" name="phone" class="form-control" id="phone" placeholder="Điền số điện thoại vào đây" required value="<?php echo $infoUser['sdt']; ?>" />
       </div>
+      <div class="form-group">
+        <label for="phone">Email</label>
+        <input type="mail" name="email" class="form-control" id="mail" placeholder="Điền mail vào đây" required value="<?php echo $infoUser['email']; ?>" disabled />
+      </div>
       <div class="custom-file">
         <input type="file" name="avatar" class="custom-file-input" id="avatar" accept="image/*" />
         <label class="custom-file-label" for="avatar">Chọn ảnh đại diện...</label>

@@ -23,7 +23,7 @@ session_start();
 include "controller/incl.php";
 ?>
   <div style="padding-bottom: 10px;">
-    <header class="navbar navbar-expand-lg navbar-light bg-light">
+    <header class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
       <a class="navbar-brand" href="#">1760081 - 1560165</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -174,4 +174,4 @@ include "controller/incl.php";
       ?>
     </header>
   </div>
-  <div style="padding-left: 0.5%; padding-right: 0.5%;">
+  <div style="padding-left: 0.5%; padding-right: 0.5%; margin-top: 2%;">
