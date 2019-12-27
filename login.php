@@ -16,7 +16,8 @@
         else {  
           $infoUser = $login;
           if (isset($_POST['remember'])) {
-            setcookie('user', $login, time() + 3600*24*7);
+			  $login['avatar']=null;
+            setcookie('user', json_encode($login), time() + 3600 + 24);
             echo "Chào mừng ".$login['hoten']." đã trở lại trang.";
           } else {
             $_SESSION['user'] = $login;

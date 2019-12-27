@@ -18,6 +18,7 @@
 </head>
 <body>
 <?php 
+ob_start();
 session_start(); 
 include "controller/incl.php";
 ?>
@@ -41,7 +42,7 @@ include "controller/incl.php";
             <a class="nav-item nav-link" href="friend.php">Bạn bè</a>
             <a class="nav-item nav-link" href="profile.php">
               <?php 
-              $infoUser = isset($_SESSION['user']) ? $_SESSION['user'] : $_COOKIE['user'];
+              $infoUser = isset($_SESSION['user']) ? $_SESSION['user'] : json_decode($_COOKIE['user'],true);
               echo $infoUser['hoten'];
               ?>
             </a>

@@ -44,6 +44,7 @@ ini_set('upload_max_filesize', '64M');?>
 </body>
 </html>
 <?php 
+ob_end_flush();
 //var_dump($_POST);
 /*
 	$(document).ready(function(){
