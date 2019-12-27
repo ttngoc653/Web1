@@ -14,7 +14,7 @@ if (isset($_GET['id'])) {
 		?>
 		<h2 style="text-align: center;">
 			<img src="data:image;base64,<?php echo $user['avatar']; ?>" width="150px" class="rounded-circle"> Tường nhà của <?php echo $user['hoten'];
-				echo '<a href="/chat.php?id='.$_GET['id'];.'">(Nhắn tin)</a>';
+				echo '<a href="/chat.php?id='.$_GET['id'].'">(Nhắn tin)</a>';
 				$theodoi=new theodoi;
 				if ($theodoi->check($infoUser['ma'],$_GET['id'])) {
 					echo '<button id="actFollow" value="delete" data-partnerid="'.$_GET['id'].'" class="btn btn-secondary" style="margin-left: 10px;">Bỏ theo dõi</button>';

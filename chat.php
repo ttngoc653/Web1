@@ -162,7 +162,7 @@ include 'header.php';
               </div>
             </div>
             <div class="inbox_chat">
-              <div class="chat_list" style="display: none;">
+              <div class="chat_list" style="display: ;">
                 <div class="chat_people">
                   <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                   <div class="chat_ib">
@@ -179,16 +179,22 @@ include 'header.php';
             </div>
             <div class="type_msg">
               <div class="input_msg_write">
-                <input type="text" class="write_msg" data-chatkey="<?php 
+                <?php
+                $idTrochuyen=0; 
                 $nguoidung=new nguoidung;
-                if(isset($_GET['id']) && $nguoidung->getFromKey($_GET['id'])!=NULL) {
+                  //echo "<script>alert(".$nguoidung->getFromId($_GET['id']).");</script>";
+                if(isset($_GET['id']) && $nguoidung->getFromId($_GET['id'])!=NULL) {
                   $trochuyen=new trochuyen;
                   $idTrochuyen=$trochuyen->CheckOneOne($infoUser['ma'],$_GET['id']);
-                  if($idTrochuyen==NULL){
+                  //echo "<script>alert(".var_dump($idTrochuyen).");</script>";
+                  if($idTrochuyen==null){
                     $idTrochuyen=$trochuyen->createOneOne($infoUser['ma'],$_GET['id']);
                   }
-                  echo $idTroChuyen;
-                } ?>" placeholder="Nhập tin nhắn..." />
+                }
+                else if(isset($_GET['t'])) {
+                  $idTrochuyen = $_GET['t'];
+                } ?>
+                <input type="text" class="write_msg" data-chatkey="<?php echo $idTrochuyen; ?>" placeholder="Nhập tin nhắn..." />
                 <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
               </div>
             </div>
@@ -208,7 +214,7 @@ include 'header.php';
         elementAdd.html(data);
       }
     })
-  },1000);
+  },100);
 
   // load content chat
   setInterval(function() {
@@ -226,7 +232,7 @@ include 'header.php';
         elementAdd.html(data);
       }
     })
-  },1000);
+  },500);
 
 
   // set height 100%
@@ -241,7 +247,7 @@ include 'header.php';
       var heightElement = $('div.inbox_chat').height();
       $('div.inbox_chat').height(heightElement+heightResized-10);
     }
-  },100);
+  },500);
 
 
 
@@ -295,7 +301,7 @@ include 'header.php';
         data:{userid:<?php echo $infoUser['ma']; ?>,roomid:$(".write_msg").data('chatkey'),content:$(this).val()},
         success:function(data) {
           $(this).val("");
-          alert(data);
+          //alert(data);
         }
       })
       $(this).val("");

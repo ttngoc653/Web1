@@ -31,12 +31,12 @@ class trochuyen extends connectDB {
 		$stmt->execute(array($idUser,$idPartner));	
 		while($row=$stmt->fetch(PDO::FETCH_ASSOC))
 			return $row['hoithoaima'];
-		return NULL;
+		return null;
 	}
 
 	public function createOneOne($idUser,$idPartner)
 	{
-		if ($this->checkOneOne($idUser,$idPartner)!=NULL) {
+		if ($this->checkOneOne($idUser,$idPartner)==NULL) {
 			$stmt = $this->getConnect()->prepare("INSERT INTO `trochuyen`(`ndtaoid`) VALUES (?)");
 			$stmt->execute(array($idUser));	
 			//$stmt->debugDumpParams();
@@ -51,7 +51,7 @@ class trochuyen extends connectDB {
 			return $idHoiThoai;
 		}
 
-		return false;
+		return 0;
 	}
 
 	public function getChat($idUser, $idRoom)

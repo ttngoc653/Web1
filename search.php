@@ -20,7 +20,7 @@ include 'header.php';
 				}
 				?>
 				<div class="alert col-6" role="alert" style="border-color: #c6c8ca; color: black;  display: inline-block;">
-					<img src="<?php echo $imgSrc; ?>" height="72px" class="rounded-circle">	<b style="margin-left: 15px; font-weight: 400; font-size: 30px"><a href="wall.php?id=<?php echo $i['ma']; ?>"><?php echo $i['hoten']; ?></a></b> <a href="/chat.php?id=<?php echo $i['ma']; ?>">(Nhắn tin)</a>
+					<img src="<?php echo $imgSrc; ?>" height="72px" class="rounded-circle">	<b style="margin-left: 15px; font-weight: 400; font-size: 30px"><a href="wall.php?id=<?php echo $i['ma']; ?>"><?php echo $i['hoten']; ?></a></b> <a href="./chat.php?id=<?php echo $i['ma']; ?>">(Nhắn tin)</a>
 					<?php if (isset($infoUser)): ?>
 						<div style="float: right;">
 							<?php
