@@ -31,19 +31,19 @@
 			data:{userid:<?php echo isset($infoUser)?$infoUser['ma']: "0"; ?>,partnerid:idPartner,act:act},
 			success:function(data) {
 				elementChanged.empty();
-				if (act.localeCompare("add")==0) {
+				if (act=="add") {
 					elementChanged.append(getButtonSent());
 					elementChanged.append(getButtonDelete(idPartner));
 
 					elementFollow.val("add");
 					actionProcessFollow(elementFollow);
-				} else if (act.localeCompare("accept")==0) {
+				} else if (act=="accept") {
 					elementChanged.append(getButtonFriending());
 					elementChanged.append(getButtonDestroy(idPartner));
 
 					elementFollow.val("add");
 					actionProcessFollow(elementFollow);
-				} else if (act.localeCompare("delete")==0 || act.localeCompare("destroy")==0) {
+				} else if (act=="delete" || act=="destroy") {
 					elementChanged.append(getButtonAdd(idPartner));
 
 					elementFollow.val("delete");

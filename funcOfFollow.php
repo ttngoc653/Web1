@@ -22,10 +22,10 @@
 			success:function(data) {
 				//alert(data);
 				elementChanged.empty();
-				if (act.localeCompare("add")==0) {
+				if (act=="add") {
 					elementChanged.text("Bỏ theo dõi");
 					elementChanged.val("delete");
-				} else if (act.localeCompare("delete")==0) {
+				} else if (act=="delete") {
 					elementChanged.text("Theo dõi");
 					elementChanged.val("add");
 				} 
