@@ -162,7 +162,7 @@ include 'header.php';
               </div>
             </div>
             <div class="inbox_chat">
-              <div class="chat_list" style="display: ;">
+              <div class="chat_list" style="display: none;">
                 <div class="chat_people">
                   <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                   <div class="chat_ib">
@@ -293,20 +293,33 @@ include 'header.php';
   })
 
   $('input.write_msg').keyup(function(e){
-    if(e.keyCode == 13)
+    if(e.keyCode == 13 && $(this).val().trim().length!=0)
     {
       $.ajax({
         url:"<?php echo getCurURL(); ?>/../ajaxProcess/actionChatAdd.php",
         method:"POST",
-        data:{userid:<?php echo $infoUser['ma']; ?>,roomid:$(".write_msg").data('chatkey'),content:$(this).val()},
+        data:{userid:<?php echo $infoUser['ma']; ?>,roomid:$(".write_msg").data('chatkey'),content:$(this).val().trim()},
         success:function(data) {
-          $(this).val("");
-          //alert(data);
         }
       })
-      $(this).val("");
       $('div.msg_history').scrollTop($('div.msg_history')[0].scrollHeight);
     }
+      $(this).val("");
+  });
+
+  $('button.msg_send_btn').click(function(e){
+    if($("input.write_msg").val().trim().length!=0)
+    {
+      $.ajax({
+        url:"<?php echo getCurURL(); ?>/../ajaxProcess/actionChatAdd.php",
+        method:"POST",
+        data:{userid:<?php echo $infoUser['ma']; ?>,roomid:$(".write_msg").data('chatkey'),content:$("input.write_msg").val().trim()},
+        success:function(data) {
+        }
+      })
+      $('div.msg_history').scrollTop($('div.msg_history')[0].scrollHeight);
+    }
+    $('input.write_msg').val("");
   });
 </script>
 
