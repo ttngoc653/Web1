@@ -232,7 +232,7 @@ include 'header.php';
         elementAdd.html(data);
       }
     })
-  },500);
+  },100);
 
 
   // set height 100%
@@ -247,7 +247,7 @@ include 'header.php';
       var heightElement = $('div.inbox_chat').height();
       $('div.inbox_chat').height(heightElement+heightResized-10);
     }
-  },500);
+  },100);
 
 
 
@@ -303,8 +303,9 @@ include 'header.php';
         }
       })
       $('div.msg_history').scrollTop($('div.msg_history')[0].scrollHeight);
-    }
+
       $(this).val("");
+    }
   });
 
   $('button.msg_send_btn').click(function(e){
@@ -318,8 +319,8 @@ include 'header.php';
         }
       })
       $('div.msg_history').scrollTop($('div.msg_history')[0].scrollHeight);
-    }
     $('input.write_msg').val("");
+    }
   });
 </script>
 

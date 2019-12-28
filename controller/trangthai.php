@@ -9,15 +9,19 @@ class trangthai extends connectDB {
 		$stmt->execute(array($idUser, $privateP, str_replace("\n","<br />", str_replace("\n","<br />", htmlentities($content)))));
 
 		$idTrangThai=$this->getConnect()->lastInsertId();
-
+		$numberImageDoNotSave=0;
 		for ($i=0; $i < count($images); $i++) { 
 			try{
 				error_reporting(0);
 				$stmt = $this->getConnect()->prepare("INSERT INTO `trangthaidinhkem`(`matt`, `anhdinhkem`) VALUES (?,?);");
 				$stmt->execute(array($idTrangThai, $images[$i]));
 			} catch (PDOException $e) {
-				echo $i;
+				$numberImageDoNotSave++;
 			}
+		}
+
+		if ($numberImageDoNotSave!=0) {
+			echo "Có ".$numberImageDoNotSave. " ảnh không lưu được.<br/>";
 		}
 
 		return $idTrangThai;

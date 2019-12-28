@@ -43,6 +43,9 @@ include "controller/incl.php";
             <a class="nav-item nav-link" href="profile.php">
               <?php 
               $infoUser = isset($_SESSION['user']) ? $_SESSION['user'] : json_decode($_COOKIE['user'],true);
+              // include 'controller/incl.php';
+              $nguoidung=new nguoidung;
+              $infoUser = $nguoidung->getFromId($infoUser['ma']);
               echo $infoUser['hoten'];
               ?>
             </a>
@@ -55,10 +58,10 @@ include "controller/incl.php";
       </div>
 
       <form class="form-inline my-2 my-lg-0" method="GET" action="search.php">
-        <input list="listSearching" name="q" id="keywordSearch" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <input list="listSearching" name="q" id="keywordSearch" class="form-control mr-sm-2" type="search" placeholder="Nhập từ khóa..." aria-label="Search">
   <datalist id="listSearching">
   </datalist>
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm kiếm</button>
       </form>
       <script>
           $("body").on("keyup","input#keywordSearch",function() {
@@ -113,6 +116,7 @@ include "controller/incl.php";
               success:function(data) {
               }
             })
+            $(this).css("background-color", "");
           });
           function showListNotification(){
             if($("div#listNotifi").is(":visible")){
